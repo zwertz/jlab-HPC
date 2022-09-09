@@ -28,7 +28,7 @@ do
     mssfilename='mss:/mss/halla/sbs/raw/'$eviofilename
     cachefile='/cache/mss/halla/sbs/raw/'$eviofilename
     
-    script='/work/halla/sbs/pdbforce/jlab-farm-replay/run-gmn-replay.sh'
+    script='/work/halla/sbs/pdbforce/jlab-HPC/run-gmn-replay.sh'
 
     testfilename='/mss/halla/sbs/raw/'$eviofilename
     

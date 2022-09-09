@@ -23,7 +23,7 @@ do
     postscript=$preinit'_job_'$i'.mac'
     g4sbsjobname=$preinit'_job_'$i
 
-    g4sbsscript='/work/halla/sbs/pdbforce/jlab-farm-replay/run-g4sbs-simu.sh'
+    g4sbsscript='/work/halla/sbs/pdbforce/jlab-HPC/run-g4sbs-simu.sh'
 
     swif2 add-job -workflow $workflowname -partition production -name $g4sbsjobname -cores 1 -disk 5GB -ram 1500MB $g4sbsscript $preinit $postscript $nevents $outfilename $outdirpath
 
@@ -32,7 +32,7 @@ do
     sbsdigjobname=$preinit'_digi_job_'$i
     sbsdiginfile=$outdirpath'/'$outfilename
 
-    sbsdigscript='/work/halla/sbs/pdbforce/jlab-farm-replay/run-sbsdig.sh'
+    sbsdigscript='/work/halla/sbs/pdbforce/jlab-HPC/run-sbsdig.sh'
     
     swif2 add-job -workflow $workflowname -antecedent $g4sbsjobname -partition production -name $sbsdigjobname -cores 1 -disk 5GB -ram 1500MB $sbsdigscript $txtfile $sbsdiginfile
 
@@ -40,7 +40,7 @@ do
     digireplayinfile=$preinit'_job_'$i
     digireplayjobname=$preinit'_digi_replay_job_'$i
 
-    digireplayscript='/work/halla/sbs/pdbforce/jlab-farm-replay/run-digi-replay.sh'
+    digireplayscript='/work/halla/sbs/pdbforce/jlab-HPC/run-digi-replay.sh'
     
     swif2 add-job -workflow $workflowname -antecedent $sbsdigjobname -partition production -name $digireplayjobname -cores 1 -disk 5GB -ram 1500MB $digireplayscript $digireplayinfile $outdirpath
 done

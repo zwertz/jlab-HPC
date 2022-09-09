@@ -9,7 +9,7 @@ prefix=$3
 jobname=$prefix-$iter
 configfile=$prefix.cfg
 
-script='/work/halla/sbs/pdbforce/jlab-farm-replay/run-bbcal-calibration.sh'
+script='/work/halla/sbs/pdbforce/jlab-HPC/run-bbcal-calibration.sh'
 
 swif2 add-job -workflow bbcal-calib-sbs14 -partition production -name bbcal-calib-$jobname -cores 1 -disk 25GB -ram 1500MB  $script $setnum $iter $configfile
 

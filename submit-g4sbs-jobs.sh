@@ -18,7 +18,7 @@ do
     postscript=$preinit'_job_'$i'.mac'
     jobname=$preinit'_job_'$i
 
-    script='/work/halla/sbs/pdbforce/jlab-farm-replay/run-g4sbs-simu.sh'
+    script='/work/halla/sbs/pdbforce/jlab-HPC/run-g4sbs-simu.sh'
 
     swif2 add-job -workflow test-g4sbs -partition production -name $jobname -cores 1 -disk 5GB -ram 1500MB $script $preinit $postscript $nevents $outfilename $outdirpath
     #./run-g4sbs-simu.sh $preinit $postscript $nevents $outfilename $outdirpath # for testing purposes
