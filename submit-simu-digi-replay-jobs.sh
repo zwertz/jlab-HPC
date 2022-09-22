@@ -16,7 +16,7 @@ if [[ "$#" -ne 3 ]]; then
     exit;
 fi
 
-for ((i=0; i<=$njobs; i++))
+for ((i=1; i<=$njobs; i++))
 do
     # lets submit g4sbs jobs first
     outfilename=$preinit'_job_'$i'.root'

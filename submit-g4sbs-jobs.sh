@@ -3,8 +3,8 @@
 preinit=$1 # don't add file extension
 nevents=$2
 njobs=$3
-workflowname='gen_66'
-outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output/gen/gen_66'
+workflowname='gen_97'
+outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output/gen/gen_97'
 
 # Validating the number of arguments provided
 if [[ "$#" -ne 3 ]]; then
@@ -13,7 +13,7 @@ if [[ "$#" -ne 3 ]]; then
     exit;
 fi
 
-for ((i=0; i<=$3; i++))
+for ((i=1; i<=$3; i++))
 do
     outfilename=$preinit'_job_'$i'.root'
     postscript=$preinit'_job_'$i'.mac'
