@@ -34,7 +34,7 @@ preinit=$1
 postscript=$2
 nevents=$3
 outfilename=$4
-workdirpath=$5
+outdirpath=$5
 
 echo '/g4sbs/filename '$4 >>$postscript
 echo '/g4sbs/run '$3 >>$postscript
@@ -44,7 +44,7 @@ cat $postscript
 g4sbs --pre=$preinit'.mac' --post=$postscript 
 
 # idiot proofing
-if [[ ! -d $workdirpath ]]; then
-    mkdir $workdirpath
+if [[ ! -d $outdirpath ]]; then
+    mkdir $outdirpath
 fi
-mv $outfilename $workdirpath
+mv $outfilename $outdirpath
