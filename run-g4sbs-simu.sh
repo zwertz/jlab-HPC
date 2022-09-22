@@ -43,5 +43,8 @@ cat $postscript
 
 g4sbs --pre=$preinit'.mac' --post=$postscript 
 
-#rm $postscript
+# idiot proofing
+if [[ ! -d $workdirpath ]]; then
+    mkdir $workdirpath
+fi
 mv $outfilename $workdirpath
