@@ -48,4 +48,5 @@ done
 
 # run the workflow and then print status
 swif2 run $workflowname
+echo -e "\n Getting workflow status.. [may take a few minutes!] \n"
 swif2 status $workflowname
