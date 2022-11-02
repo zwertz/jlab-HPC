@@ -3,11 +3,12 @@
 preinit=$1 # don't add file extension
 nevents=$2
 njobs=$3
-workflowname='test3-g4sbs'
+workflowname='gmng4_sbs8_0p'
+swif2 create $workflowname
 # specify a directory on volatile to store g4sbs, sbsdig, & replayed files.
 # Working on a single directory is convenient safe for the above mentioned
 # three processes to run smoothly.
-outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output'
+outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output/gmng4_sbs8'
 
 # Validating the number of arguments provided
 if [[ "$#" -ne 3 ]]; then
@@ -44,3 +45,7 @@ do
     
     swif2 add-job -workflow $workflowname -antecedent $sbsdigjobname -partition production -name $digireplayjobname -cores 1 -disk 5GB -ram 1500MB $digireplayscript $digireplayinfile $outdirpath
 done
+
+# run the workflow and then print status
+swif2 run $workflowname
+swif2 status $workflowname
