@@ -18,8 +18,8 @@ module use /apps/modulefiles
 fi 
 
 # setup farm environments
-module load gcc/9.2.0 
 source /site/12gev_phys/softenv.sh 2.4
+module load gcc/9.2.0 
 ldd /work/halla/sbs/pdbforce/LIBSBSDIG/install/bin/sbsdig |& grep not
 
 # Setup sbsdig specific environments

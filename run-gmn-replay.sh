@@ -31,10 +31,8 @@ if [ -d /apps/modulefiles ]; then
 module use /apps/modulefiles 
 fi 
 
-module load gcc/9.2.0 
-
 source /site/12gev_phys/softenv.sh 2.4
-
+module load gcc/9.2.0 
 #ldd /work/halla/sbs/ANALYZER/install/bin/analyzer |& grep not
 ldd /work/halla/sbs/pdbforce/ANALYZER/install/bin/analyzer |& grep not
 
