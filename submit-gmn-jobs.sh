@@ -4,6 +4,7 @@
 
 runnum=$1
 maxsegments=$2
+workflowname='sbs4-ld2'
 
 #optional 3rd argument for output directory:
 out_dir='/volatile/halla/sbs/pdbforce/gmn-replays'
@@ -45,10 +46,10 @@ do
 	if [ $i -gt 0 ]
 	then
 	    echo 'segment '$i' also requires first segment'
-	    swif2 add-job -workflow datta-gmn-sbs11 -partition production -name $jobname -cores 1 -disk 25GB -ram 1500MB -input $cachefile $mssfilename -input $cachefirst $mssfirst $script $runnum -1 0 e1209019 $i 1
+	    swif2 add-job -workflow $workflowname -partition production -name $jobname -cores 1 -disk 25GB -ram 1500MB -input $cachefile $mssfilename -input $cachefirst $mssfirst $script $runnum -1 0 e1209019 $i 1
 	else
 	    echo 'segment '$i' IS first segment'
-	    swif2 add-job -workflow datta-gmn-sbs11 -partition production -name $jobname -cores 1 -disk 25GB -ram 1500MB -input $cachefile $mssfilename $script $runnum -1 0 e1209019 $i 1
+	    swif2 add-job -workflow $workflowname -partition production -name $jobname -cores 1 -disk 25GB -ram 1500MB -input $cachefile $mssfilename $script $runnum -1 0 e1209019 $i 1
 	fi
     fi
 done
