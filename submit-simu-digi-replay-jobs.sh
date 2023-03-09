@@ -3,18 +3,29 @@
 preinit=$1 # don't add file extension
 nevents=$2
 njobs=$3
-workflowname='gmng4_sbs8_0p'
+workflowname='sbs4-sbs50p-sdr'
 swif2 create $workflowname
-# specify a directory on volatile to store g4sbs, sbsdig, & replayed files.
-# Working on a single directory is convenient safe for the above mentioned
+# Specify a directory on volatile to store g4sbs, sbsdig, & replayed files.
+# Working on a single directory is convenient & safe for the above mentioned
 # three processes to run smoothly.
-outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output/gmng4_sbs8'
+outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output/sdr/sbs4-sbs50p'
 
 # Validating the number of arguments provided
 if [[ "$#" -ne 3 ]]; then
     echo -e "\n--!--\n Illegal number of arguments!!"
-    echo -e " This script expects 3 arguments: <preinit> <nevents> <njobs> \n"
+    echo -e " This script expects 3 arguments: <preinit_w/o_extension> <nevents> <njobs> \n"
     exit;
+fi
+
+# Create the output directory if necessary
+if [[ ! -d $outdirpath ]]; then
+    { #try
+	mkdir $outdirpath
+    } || { #catch
+	echo -e "\n!!!!!!!! ERROR !!!!!!!!!"
+	echo -e $outdirpath "doesn't exist and cannot be created! \n"
+	exit;
+    }
 fi
 
 for ((i=1; i<=$njobs; i++))
