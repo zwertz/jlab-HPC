@@ -18,12 +18,12 @@ module use /apps/modulefiles
 fi 
 
 # setup farm environments
-source /site/12gev_phys/softenv.sh 2.4
+source /site/12gev_phys/softenv.sh 2.5
 module load gcc/9.2.0 
-ldd /work/halla/sbs/pdbforce/LIBSBSDIG/install/bin/sbsdig |& grep not
+ldd /work/halla/sbs/ewertz/digitization/install/bin/sbsdig |& grep not
 
 # Setup sbsdig specific environments
-export LIBSBSDIG=/work/halla/sbs/pdbforce/LIBSBSDIG/install
+export LIBSBSDIG=/work/halla/sbs/ewertz/digitization/install
 source $LIBSBSDIG/bin/sbsdigenv.sh
 
 # run the sbsdig command

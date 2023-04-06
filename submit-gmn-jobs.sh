@@ -4,10 +4,10 @@
 
 runnum=$1
 maxsegments=$2
-workflowname='sbs4-ld2'
+workflowname='sbs9-sbs70p-lh2'
 
 #optional 3rd argument for output directory:
-out_dir='/volatile/halla/sbs/pdbforce/gmn-replays'
+out_dir='/volatile/halla/sbs/pdbforce/gmn-replays/bbcalcalib'
 
 if [ $# -eq 3 ];
 then

@@ -21,12 +21,12 @@ module use /apps/modulefiles
 fi 
 
 # setup farm environments
-source /site/12gev_phys/softenv.sh 2.4
+source /site/12gev_phys/softenv.sh 2.5
 module load gcc/9.2.0 
-ldd /work/halla/sbs/pdbforce/G4SBS/install/bin/g4sbs |& grep not
+ldd /work/halla/sbs/ewertz/simulation/install/bin/g4sbs |& grep not
 
 # Setup g4sbs specific environments
-export G4SBS=/work/halla/sbs/pdbforce/G4SBS/install
+export G4SBS=/work/halla/sbs/ewertz/simulation/install
 source $G4SBS/bin/g4sbs.sh
 
 # run the g4sbs command

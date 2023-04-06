@@ -1,0 +1,1 @@
+/work/halla/sbs/ewertz/simulation/g4sbs/gmn_SBS4_50p_QE.root
