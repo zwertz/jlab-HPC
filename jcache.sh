@@ -112,7 +112,7 @@ elif [[ $segs == 1000 ]]; then
 	jcache get $DATA_DIR/e1209019_$1.evio.0.$i
     done
 else
-    for (( i=0; i<=$segs; i++ ))
+    for (( i=0; i<$segs; i++ ))
     do
 	jcache get $DATA_DIR/e1209019_$1.evio.0.$i
     done
