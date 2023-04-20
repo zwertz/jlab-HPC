@@ -3,7 +3,7 @@
 ## Edits
 # P. Datta <pdbforce@jlab.org> Created 01-24-2021
 
-# This scripts jcache evio files for a run for desired
+# This script jcache evio files for a run for desired
 # segments. First it checks in the cache directory. If
 # a segment already exists then it asks for user input. 
 
@@ -34,7 +34,7 @@ do
 	if [[ $maxCH == -1 ]]
 	then
 	    echo "----"
-	    echo " Needs cache-ing. Preceeding.. "
+	    echo " Needs cache-ing. Proceeding.. "
 	    break;
 	else
 	    bool=5
