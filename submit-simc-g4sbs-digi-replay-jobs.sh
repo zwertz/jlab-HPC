@@ -5,6 +5,8 @@
 # to submit g4sbs, sbsdig, and replay jobs to the batch farm.               #
 # ---------                                                                 #
 # P. Datta <pdbforce@jlab.org> CREATED 04-19-2023                           #
+# ---------                                                                 #
+# ** Do not tamper with this sticker! Log any updates to the script above.  #
 # ------------------------------------------------------------------------- #
 
 # SIMC input file (don't add file extension). Must be located at $SIMC/infiles 

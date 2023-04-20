@@ -4,6 +4,8 @@
 # This script runs g4sbs simulation jobs using SIMC generated events.       #
 # ---------                                                                 #
 # P. Datta <pdbforce@jlab.org> CREATED 04-19-2023                           #
+# ---------                                                                 #
+# ** Do not tamper with this sticker! Log any updates to the script above.  #
 # ------------------------------------------------------------------------- #
 
 #SBATCH --partition=production

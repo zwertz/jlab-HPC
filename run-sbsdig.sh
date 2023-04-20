@@ -4,6 +4,8 @@
 # This script runs sbsdig jobs.                                             #
 # ---------                                                                 #
 # P. Datta <pdbforce@jlab.org> CREATED 11-09-2022                           #
+# ---------                                                                 #
+# ** Do not tamper with this sticker! Log any updates to the script above.  #
 # ------------------------------------------------------------------------- #
 
 #SBATCH --partition=production

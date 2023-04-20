@@ -2,6 +2,8 @@
 
 ## Edits
 # P. Datta <pdbforce@jlab.org> Created 01-24-2021
+# ---------                                                               
+# ** Do not tamper with this sticker! Log any updates to the script above.
 
 # This script jcache evio files for a run for desired
 # segments. First it checks in the cache directory. If
