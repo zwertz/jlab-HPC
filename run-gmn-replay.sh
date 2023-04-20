@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# ------------------------------------------------------------------------- #
+# This script runs real data replay jobs for GMn/nTPE data. It was created  #
+# based on Andrew Puckett's script.                                         #
+# ---------                                                                 #
+# P. Datta <pdbforce@jlab.org> CREATED 11-09-2022                           #
+# ------------------------------------------------------------------------- #
+
 #SBATCH --partition=production
 #SBATCH --account=halla
 #SBATCH --mem-per-cpu=1500

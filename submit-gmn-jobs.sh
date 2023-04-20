@@ -4,10 +4,10 @@
 
 runnum=$1
 maxsegments=$2
-workflowname='sbs4-ld2'
+workflowname='sbs14-sbs70p-lh2'
 
 #optional 3rd argument for output directory:
-out_dir='/volatile/halla/sbs/pdbforce/gmn-replays'
+out_dir='/lustre19/expphy/volatile/halla/sbs/pdbforce/gmn-replays/rootfiles'
 
 if [ $# -eq 3 ];
 then
@@ -16,9 +16,9 @@ fi
 
 for ((i=0; i<=$2; i++))
 do
-    fnameout_pattern='/farm_out/pdbforce/bbcal_gmn_'$runnum'_segment'$i'.out'
+    fnameout_pattern='/farm_out/pdbforce/pdatta_gmn_'$runnum'_segment'$i'.out'
     #    sbatch --output=$fnameout_pattern run_GMN_sbatch_nohodo.sh $runnum -1 0 e1209019 $i 1
-    jobname='bbcal_gmn_'$runnum'_segment'$i
+    jobname='pdatta_gmn_'$runnum'_segment'$i
     
     # look for first segment on cache disk:
     firstsegname='e1209019_'$runnum'.evio.0.0'

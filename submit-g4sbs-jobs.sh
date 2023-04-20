@@ -1,10 +1,16 @@
 #!/bin/bash
 
+# ------------------------------------------------------------------------- #
+# This script submits g4sbs simulation jobs to batch farm.                  #
+# ---------                                                                 #
+# P. Datta <pdbforce@jlab.org> CREATED 11-09-2022                           #
+# ------------------------------------------------------------------------- #
+
 preinit=$1 # don't add file extension
 nevents=$2
 njobs=$3
-workflowname='gen_97'
-outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output/gen/gen_97'
+workflowname='gmng4_sbs14_70p'
+outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output/gmng4_sbs14'
 
 # Validating the number of arguments provided
 if [[ "$#" -ne 3 ]]; then

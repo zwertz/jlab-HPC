@@ -1,10 +1,23 @@
 #!/bin/bash
 
-preinit=$1 # don't add file extension
+# ------------------------------------------------------------------------- #
+# This script submits g4sbs, sbsdig, and replay jobs to the batch farm and  #
+# enusres they run in right order.                                          #
+# ---------                                                                 #
+# P. Datta <pdbforce@jlab.org> CREATED 11-09-2022                           #
+# ------------------------------------------------------------------------- #
+
+# Name of g4sbs preinit macro (don't add file extention). Must to located at 
+# G4SBS/scripts
+preinit=$1
+# No. of events to generate per job
 nevents=$2
+# No. of jobs to submit
 njobs=$3
+# Workflow name
 workflowname='sbs4-sbs50p-sdr'
 swif2 create $workflowname
+
 # Specify a directory on volatile to store g4sbs, sbsdig, & replayed files.
 # Working on a single directory is convenient & safe for the above mentioned
 # three processes to run smoothly.

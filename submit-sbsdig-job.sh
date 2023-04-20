@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# ------------------------------------------------------------------------- #
+# This script submits sbsdig jobs to batch farm.                            #
+# ---------                                                                 #
+# P. Datta <pdbforce@jlab.org> CREATED 11-09-2022                           #
+# ------------------------------------------------------------------------- #
+
 inputfile=$1 # .txt file containing input file paths
 jobname=$2
 outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output'

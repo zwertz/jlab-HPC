@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# ------------------------------------------------------------------------- #
+# This script runs replay jobs of pseudo (i.e. digitized) data.             #
+# ---------                                                                 #
+# P. Datta <pdbforce@jlab.org> CREATED 11-09-2022                           #
+# ------------------------------------------------------------------------- #
+
 #SBATCH --partition=production
 #SBATCH --account=halla
 #SBATCH --mem-per-cpu=1500
