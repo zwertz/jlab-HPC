@@ -28,6 +28,7 @@ export G4SBS=/w/halla-scshelf2102/sbs/pdbforce/G4SBS/install
 # 7. After all the SIMC jobs are finished a summary CSV file, $infile_summary.csv get # 
 #    created and kept in the directory mentioned above which contain the important    #
 #    normalization factors per job that are necessary for analysis.                   #
+# 8. Interdependency: simc-jobs.py                                                    #
 # ----------------------------------------------------------------------------------- #
 
 # ------ Variables needed to be set properly for successful execution ------ #
@@ -109,12 +110,14 @@ else
     echo -e "\n ** $nevents g4sbs events will be generated per job!"
 fi
 
+# Creating the workflow
 if [[ $isdebug == 0 ]]; then
     swif2 create $workflowname
 else
     echo -e "\nDebug mode!\n"
 fi
 
+# Loop to create jobs
 for ((i=$fjobid; i<$((fjobid+njobs)); i++))
 do
     # lets generate SIMC events first
@@ -129,19 +132,21 @@ do
     simcoutfile=$simcoutdir'/'$infile'_job_'$i'.root'
     popd >/dev/null
 
+    # Abort if SIMC job wasn't successfull
     if [[ ! -f $simcoutfile ]]; then
 	echo -e "\n!!!!!!!! ERROR !!!!!!!!!"
 	echo -e "SIMC event generation failed! job_$i"
 	exit;
     fi
     echo -e "\nSIMC event generation successful! job_$i\n"
+
     # time to write summary table with normalization factors
     if [[ ($i == 0) || (! -f $simcnormtable) ]]; then
 	python3 simc-jobs.py 'grab_norm_factors' 'just_a_placeholder' '1' > $simcnormtable
     fi
     python3 simc-jobs.py 'grab_norm_factors' $simcoutdir'/'$infile'_job_'$i'.hist' '0' >> $simcnormtable
 
-    # lets submit g4sbs jobs first
+    # submitting g4sbs jobs using SIMC outfiles
     outfilename=$infile'_job_'$i'.root'
     postscript=$infile'_job_'$i'.mac'
     g4sbsjobname=$infile'_job_'$i
