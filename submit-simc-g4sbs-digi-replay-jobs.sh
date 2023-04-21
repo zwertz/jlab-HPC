@@ -28,7 +28,8 @@ export G4SBS=/w/halla-scshelf2102/sbs/pdbforce/G4SBS/install
 # 7. After all the SIMC jobs are finished a summary CSV file, $infile_summary.csv get # 
 #    created and kept in the directory mentioned above which contain the important    #
 #    normalization factors for all jobs.                                              #
-# 8. Interdependency: simc-jobs.py                                                    #
+# 8. List of interdependencies: simc-jobs.py, run-g4sbs-w-simc.sh, run-sbsdig.sh,     #
+#    run-digi-replay.sh                                                               #
 # ----------------------------------------------------------------------------------- #
 
 # ------ Variables needed to be set properly for successful execution ------ #
@@ -42,13 +43,13 @@ fjobid=$2 # first job id
 njobs=$3  # total no. of jobs to submit 
 # ----/\---- Above variables are taken as arguments to this script ---/\---- # 
 # Debug mode or not [0=False] (If true, comments out all swif2 commands)
-isdebug=1
+isdebug=0
 # Workflow name
 workflowname='test'
 # Specify a directory on volatile to store simc, g4sbs, sbsdig, & replayed outfiles.
 # Working on a single directory is convenient & safe for the above mentioned
 # four processes to run coherently without any error.
-outdirpath='/w/halla-scshelf2102/sbs/pdbforce/jlab-HPC/test'
+outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/test'
 # -------------------------------------------------------------------------- #
 
 # Sanity check 1: Validating the number of arguments provided
