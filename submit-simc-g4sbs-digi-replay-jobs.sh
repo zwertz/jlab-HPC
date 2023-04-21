@@ -22,12 +22,12 @@ export G4SBS=/w/halla-scshelf2102/sbs/pdbforce/G4SBS/install
 # 2. Total no. of events per g4sbs job gets determined by SIMC infile ("ngen" flag)   #
 # 3. Be sure to edit "workflowname" variable appropriately before executing script.   #
 # 4. Be sure to edit "outdirpath" variable appropriately before executing script.     #
-# 5. "isdebug" = 1 will be interpreted as debug mode.                                 #
+# 5. "isdebug" != 0 will be interpreted as debug mode.                                #
 # 6. SIMC jobs get executed on ifarm (not on batch farm) and all the output files get #
 #    moved to $outdirpath/simcoutdir directory.                                       #
 # 7. After all the SIMC jobs are finished a summary CSV file, $infile_summary.csv get # 
 #    created and kept in the directory mentioned above which contain the important    #
-#    normalization factors per job that are necessary for analysis.                   #
+#    normalization factors for all jobs.                                              #
 # 8. Interdependency: simc-jobs.py                                                    #
 # ----------------------------------------------------------------------------------- #
 
@@ -91,7 +91,7 @@ if [[ ! -f $g4sbsmacro ]]; then
     exit;
 fi
 
-# Creating a sub-directory (simcout) to keep all the SIMC outputs
+# Creating a sub-directory (simcout) to keep all the SIMC outputs in one place
 export simcoutdir=$outdirpath'/simcout'
 if [[ ! -d $simcoutdir ]]; then
     mkdir $simcoutdir
@@ -100,7 +100,7 @@ fi
 # Creating a CSV file to write a summary table of normalization factors by job
 simcnormtable=$simcoutdir'/'$infile'_summary.csv'
 
-# Reading SIMC infile ("ngen" flag) to determine the # g4sbs events to generate
+# Reading SIMC infile ("ngen" flag) to determine no. of g4sbs events to generate
 nevents=$(python3 simc-jobs.py 'grab_param_value' $simcmacro 'ngen')
 if [[ $nevents -lt 0 ]]; then
     echo -e "\n!!!!!!!! ERROR !!!!!!!!!"
