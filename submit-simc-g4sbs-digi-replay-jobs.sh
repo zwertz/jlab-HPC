@@ -43,11 +43,10 @@ njobs=$3  # total no. of jobs to submit
 # Debug mode or not [0=False] (If true, comments out all swif2 commands)
 isdebug=1
 # Workflow name
-workflowname='simc-sbs4-sbs50p-sdr'
+workflowname='test'
 # Specify a directory on volatile to store g4sbs, sbsdig, & replayed files.
 # Working on a single directory is convenient & safe for the above mentioned
 # three processes to run smoothly.
-#outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output/sdr/sbs4-sbs50p/simc'
 outdirpath='/w/halla-scshelf2102/sbs/pdbforce/jlab-HPC/test'
 # -------------------------------------------------------------------------- #
 
