@@ -22,7 +22,7 @@ export G4SBS=/w/halla-scshelf2102/sbs/pdbforce/G4SBS/install
 # 2. Total no. of events per g4sbs job gets determined by SIMC infile ("ngen" flag)   #
 # 3. Be sure to edit "workflowname" variable appropriately before executing script.   #
 # 4. Be sure to edit "outdirpath" variable appropriately before executing script.     #
-# 5. In case of debugging, make "isdebug" variable to be 1.                           #
+# 5. "isdebug" = 1 will be interpreted as debug mode.                                 #
 # 6. SIMC jobs get executed on ifarm (not on batch farm) and all the output files get #
 #    moved to $outdirpath/simcoutdir directory.                                       #
 # 7. After all the SIMC jobs are finished a summary CSV file, $infile_summary.csv get # 
