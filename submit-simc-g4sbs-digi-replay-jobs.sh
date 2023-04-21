@@ -44,9 +44,9 @@ njobs=$3  # total no. of jobs to submit
 isdebug=1
 # Workflow name
 workflowname='test'
-# Specify a directory on volatile to store g4sbs, sbsdig, & replayed files.
+# Specify a directory on volatile to store simc, g4sbs, sbsdig, & replayed outfiles.
 # Working on a single directory is convenient & safe for the above mentioned
-# three processes to run smoothly.
+# four processes to run coherently without any error.
 outdirpath='/w/halla-scshelf2102/sbs/pdbforce/jlab-HPC/test'
 # -------------------------------------------------------------------------- #
 
