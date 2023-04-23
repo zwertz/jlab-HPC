@@ -29,7 +29,7 @@ def grab_param_value(infile, param):
 
 def strip_path(filewpath):
     '''Strips the path to the directory or file'''
-    lpos = filewpath.rfind('/')
+    lpos = filewpath.strip('/').rfind('/')
     return filewpath[lpos+1:]
 
 def grab_norm_factors(histfile, title_or_data):
