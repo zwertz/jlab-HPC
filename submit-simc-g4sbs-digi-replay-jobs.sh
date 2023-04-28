@@ -9,9 +9,10 @@
 # ** Do not tamper with this sticker! Log any updates to the script below.  #
 # ------------------------------------------------------------------------- #
 
-# Setting environments for SIMC & G4SBS work directories
+# Setting environments for SIMC & G4SBS work directories & script directory
 export SIMC=/w/halla-scshelf2102/sbs/pdbforce/SIMC/simc_gfortran
 export G4SBS=/w/halla-scshelf2102/sbs/pdbforce/G4SBS/install
+export SCRIPT_DIR=/w/halla-scshelf2102/sbs/pdbforce/jlab-HPC
 
 # ------------------- Notes and Instructions (READ BEFORE EXECUTION) ---------------- #
 # ----------------------------------------------------------------------------------- #
@@ -29,7 +30,7 @@ export G4SBS=/w/halla-scshelf2102/sbs/pdbforce/G4SBS/install
 #    created and kept in the directory mentioned above which contain the important    #
 #    normalization factors for all jobs.                                              #
 # 8. List of interdependencies: simc-jobs.py, run-g4sbs-w-simc.sh, run-sbsdig.sh,     #
-#    run-digi-replay.sh                                                               #
+#    run-digi-replay.sh | All these scripts must be present in the $SCRIPT_DIR        #
 # ----------------------------------------------------------------------------------- #
 
 # ------ Variables needed to be set properly for successful execution ------ #
@@ -143,7 +144,7 @@ do
 
     # time to write summary table with normalization factors
     if [[ ($i == 0) || (! -f $simcnormtable) ]]; then
-	python3 simc-jobs.py 'grab_norm_factors' 'just_a_placeholder' '1' > $simcnormtable
+    	python3 simc-jobs.py 'grab_norm_factors' 'None' '1' > $simcnormtable
     fi
     python3 simc-jobs.py 'grab_norm_factors' $simcoutdir'/'$infile'_job_'$i'.hist' '0' >> $simcnormtable
 
@@ -152,7 +153,7 @@ do
     postscript=$infile'_job_'$i'.mac'
     g4sbsjobname=$infile'_job_'$i
 
-    g4sbsscript='/work/halla/sbs/pdbforce/jlab-HPC/run-g4sbs-w-simc.sh'
+    g4sbsscript=$SCRIPT_DIR'/run-g4sbs-w-simc.sh'
 
     if [[ $isdebug == 0 ]]; then
 	swif2 add-job -workflow $workflowname -partition production -name $g4sbsjobname -cores 1 -disk 5GB -ram 1500MB $g4sbsscript $infile $postscript $nevents $outfilename $outdirpath $simcoutfile
@@ -163,7 +164,7 @@ do
     sbsdigjobname=$infile'_digi_job_'$i
     sbsdiginfile=$outdirpath'/'$outfilename
 
-    sbsdigscript='/work/halla/sbs/pdbforce/jlab-HPC/run-sbsdig.sh'
+    sbsdigscript=$SCRIPT_DIR'/run-sbsdig.sh'
     
     if [[ $isdebug == 0 ]]; then
 	swif2 add-job -workflow $workflowname -antecedent $g4sbsjobname -partition production -name $sbsdigjobname -cores 1 -disk 5GB -ram 1500MB $sbsdigscript $txtfile $sbsdiginfile
@@ -173,12 +174,15 @@ do
     digireplayinfile=$infile'_job_'$i
     digireplayjobname=$infile'_digi_replay_job_'$i
 
-    digireplayscript='/work/halla/sbs/pdbforce/jlab-HPC/run-digi-replay.sh'
+    digireplayscript=$SCRIPT_DIR'/run-digi-replay.sh'
     
     if [[ $isdebug == 0 ]]; then
 	swif2 add-job -workflow $workflowname -antecedent $sbsdigjobname -partition production -name $digireplayjobname -cores 1 -disk 5GB -ram 1500MB $digireplayscript $digireplayinfile $outdirpath
     fi
 done
+
+# keep a copy of SIMC job summary file in the $outdirpath as well
+cp $simcnormtable $outdirpath
 
 # run the workflow and then print status
 if [[ $isdebug == 0 ]]; then
