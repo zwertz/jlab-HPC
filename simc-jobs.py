@@ -35,8 +35,8 @@ def strip_path(filewpath):
 def grab_norm_factors(histfile, title_or_data):
     '''Grabs important normalization factors from SIMC .hist file'''
     # Retain the order of paramters in which they appear in .hist file
-    params = ['Ngen (request)', 'Ntried', 'charge', 'genvol', 'luminosity', 'Random Seed'] 
-    titles = ['jobid', 'Nthrown', 'Ntried', 'charge(mC)', 'genvol(MeV*sr^2)', 'luminosity(ub^-1)', 'RndmSeed']
+    params = ['Ngen (request)', 'Ntried', 'charge', 'luminosity', 'genvol', 'Random Seed'] 
+    titles = ['jobid', 'Nthrown', 'Ntried', 'charge(mC)', 'luminosity(ub^-1)', 'genvol(MeV*sr^2)', 'RndmSeed']
     chars_to_strip = ' mCub\n' #charecters to strip from the right side of equality
     if int(title_or_data) != 1:
         values = []
@@ -45,7 +45,7 @@ def grab_norm_factors(histfile, title_or_data):
         values.append(jobid)
         for line in lines:
             for item in params:
-                if item in line:
+                if (item in line) and ('GeV' not in line):
                     values.append(line.split("=", 1)[1].split("^")[0].strip(chars_to_strip))
                     break
     if int(title_or_data) != 1: 
