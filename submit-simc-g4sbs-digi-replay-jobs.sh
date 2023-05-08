@@ -46,11 +46,11 @@ njobs=$3  # total no. of jobs to submit
 # Debug mode or not [0=False] (If true, comments out all swif2 commands)
 isdebug=0
 # Workflow name
-workflowname='test'
+workflowname='simc-sdr-sbs4-sbs50p-elas'
 # Specify a directory on volatile to store simc, g4sbs, sbsdig, & replayed outfiles.
 # Working on a single directory is convenient & safe for the above mentioned
 # four processes to run coherently without any error.
-outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/test'
+outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output/simcSDR/sbs4-sbs50p-elas'
 # -------------------------------------------------------------------------- #
 
 # Sanity check 1: Validating the number of arguments provided
@@ -149,20 +149,20 @@ do
     python3 simc-jobs.py 'grab_norm_factors' $simcoutdir'/'$infile'_job_'$i'.hist' '0' >> $simcnormtable
 
     # submitting g4sbs jobs using SIMC outfiles
-    outfilename=$infile'_job_'$i'.root'
+    outfilebase=$infile'_job_'$i
     postscript=$infile'_job_'$i'.mac'
     g4sbsjobname=$infile'_job_'$i
 
     g4sbsscript=$SCRIPT_DIR'/run-g4sbs-w-simc.sh'
 
     if [[ $isdebug == 0 ]]; then
-	swif2 add-job -workflow $workflowname -partition production -name $g4sbsjobname -cores 1 -disk 5GB -ram 1500MB $g4sbsscript $infile $postscript $nevents $outfilename $outdirpath $simcoutfile
+	swif2 add-job -workflow $workflowname -partition production -name $g4sbsjobname -cores 1 -disk 5GB -ram 1500MB $g4sbsscript $infile $postscript $nevents $outfilebase $outdirpath $simcoutfile
     fi
 
     # now, it's time for digitization
     txtfile=$infile'_job_'$i'.txt'
     sbsdigjobname=$infile'_digi_job_'$i
-    sbsdiginfile=$outdirpath'/'$outfilename
+    sbsdiginfile=$outdirpath'/'$outfilebase'.root'
 
     sbsdigscript=$SCRIPT_DIR'/run-sbsdig.sh'
     

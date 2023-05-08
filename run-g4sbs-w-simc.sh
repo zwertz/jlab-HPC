@@ -41,13 +41,13 @@ source $G4SBS/bin/g4sbs.sh
 preinit=$1
 postscript=$2
 nevents=$3
-outfilename=$4
+outfilebase=$4
 outdirpath=$5
 simcoutfile=$6
 
-echo '/g4sbs/simcfile '$6 >>$postscript
-echo '/g4sbs/filename '$4 >>$postscript
-echo '/g4sbs/run '$3 >>$postscript
+echo '/g4sbs/simcfile '$simcoutfile >>$postscript
+echo '/g4sbs/filename '$outfilebase'.root' >>$postscript
+echo '/g4sbs/run '$nevents >>$postscript
 
 cat $postscript
 
@@ -57,4 +57,5 @@ g4sbs --pre=$preinit'.mac' --post=$postscript
 if [[ ! -d $outdirpath ]]; then
     mkdir $outdirpath
 fi
-mv $outfilename $outdirpath
+mv $outfilebase'.root' $outdirpath
+mv $outfilebase'.csv' $outdirpath
