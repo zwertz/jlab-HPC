@@ -2,7 +2,7 @@
 
 # ------------------------------------------------------------------------- #
 # This script runs SIMC events on ifarm and then uses the output ROOT files #
-# to submit g4sbs, sbsdig, and replay jobs to the batch farm.               #
+# to submit corresponding g4sbs, sbsdig, and replay jobs to the batch farm. #
 # ---------                                                                 #
 # P. Datta <pdbforce@jlab.org> CREATED 04-19-2023                           #
 # ---------                                                                 #
@@ -29,7 +29,7 @@ export SCRIPT_DIR=/w/halla-scshelf2102/sbs/pdbforce/jlab-HPC
 # 7. After all the SIMC jobs are finished a summary CSV file, $infile_summary.csv get # 
 #    created and kept in the directory mentioned above which contain the important    #
 #    normalization factors for all jobs.                                              #
-# 8. List of interdependencies: simc-jobs.py, run-g4sbs-w-simc.sh, run-sbsdig.sh,     #
+# 8. List of interdependencies: utility.py, run-g4sbs-w-simc.sh, run-sbsdig.sh,     #
 #    run-digi-replay.sh | All these scripts must be present in the $SCRIPT_DIR        #
 # ----------------------------------------------------------------------------------- #
 
@@ -46,11 +46,11 @@ njobs=$3  # total no. of jobs to submit
 # Debug mode or not [0=False] (If true, comments out all swif2 commands)
 isdebug=0
 # Workflow name
-workflowname='simc-sdr-sbs4-sbs50p-elas'
+workflowname='ssdr-sbs4-sbs50p-elas-87T'
 # Specify a directory on volatile to store simc, g4sbs, sbsdig, & replayed outfiles.
 # Working on a single directory is convenient & safe for the above mentioned
 # four processes to run coherently without any error.
-outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output/simcSDR/sbs4-sbs50p-elas'
+outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output/simcSDR/sbs4-sbs0p-elas-87T'
 # -------------------------------------------------------------------------- #
 
 # Sanity check 1: Validating the number of arguments provided
@@ -103,7 +103,7 @@ fi
 simcnormtable=$simcoutdir'/'$infile'_summary.csv'
 
 # Reading SIMC infile ("ngen" flag) to determine no. of g4sbs events to generate
-nevents=$(python3 simc-jobs.py 'grab_param_value' $simcmacro 'ngen')
+nevents=$(python3 utility.py 'grab_param_value' $simcmacro 'ngen')
 if [[ $nevents -lt 0 ]]; then
     echo -e "\n!!!!!!!! ERROR !!!!!!!!!"
     echo -e "Illegal no. of events! nevents = $nevents | Aborting!\n"
@@ -144,9 +144,9 @@ do
 
     # time to write summary table with normalization factors
     if [[ ($i == 0) || (! -f $simcnormtable) ]]; then
-    	python3 simc-jobs.py 'grab_norm_factors' 'None' '1' > $simcnormtable
+    	python3 utility.py 'grab_norm_factors' 'None' '1' > $simcnormtable
     fi
-    python3 simc-jobs.py 'grab_norm_factors' $simcoutdir'/'$infile'_job_'$i'.hist' '0' >> $simcnormtable
+    python3 utility.py 'grab_norm_factors' $simcoutdir'/'$infile'_job_'$i'.hist' '0' >> $simcnormtable
 
     # submitting g4sbs jobs using SIMC outfiles
     outfilebase=$infile'_job_'$i
