@@ -2,33 +2,35 @@
 
 # ------------------------------------------------------------------------- #
 # This script submits g4sbs, sbsdig, and replay jobs to the batch farm and  #
-# enusres they run in right order.                                          #
+# enusres they run in right order. There is a flag that can be set to run   #
+# all the jobs on ifarm as well.                                            #
 # ---------                                                                 #
 # P. Datta <pdbforce@jlab.org> CREATED 11-09-2022                           #
 # ---------                                                                 #
 # ** Do not tamper with this sticker! Log any updates to the script above.  #
 # ------------------------------------------------------------------------- #
 
-# Name of g4sbs preinit macro (don't add file extention). Must to located at 
-# G4SBS/scripts
-preinit=$1
-# No. of events to generate per job
-nevents=$2
-# No. of jobs to submit
-njobs=$3
-# Workflow name
-workflowname='sbs4-sbs50p-sdr'
-swif2 create $workflowname
+# Setting environments for SIMC & G4SBS work directories & script directory
+export G4SBS=/w/halla-scshelf2102/sbs/pdbforce/G4SBS/install
+export SCRIPT_DIR=/w/halla-scshelf2102/sbs/pdbforce/jlab-HPC
 
+preinit=$1      # G4SBS preinit macro (Must be located at $G4SBS/scripts)
+sbsconfig=$2    # SBS configuration (Valid options: 4,7,11,14,8,9)
+nevents=$3      # No. of events to generate per job
+fjobid=$4       # first job id
+njobs=$5        # total no. of jobs to submit 
+run_on_ifarm=$6 # 1=>Yes (If true, runs all jobs on ifarm)
+# Workflow name
+workflowname='fscan-sbs4'
 # Specify a directory on volatile to store g4sbs, sbsdig, & replayed files.
 # Working on a single directory is convenient & safe for the above mentioned
 # three processes to run smoothly.
-outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output/sdr/sbs4-sbs50p'
+outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output/fscan'
 
 # Validating the number of arguments provided
-if [[ "$#" -ne 3 ]]; then
+if [[ "$#" -ne 6 ]]; then
     echo -e "\n--!--\n Illegal number of arguments!!"
-    echo -e " This script expects 3 arguments: <preinit_w/o_extension> <nevents> <njobs> \n"
+    echo -e " This script expects 6 arguments: <preinit> <sbsconfig> <nevents> <fjobid> <njobs> <run_on_ifarm>\n"
     exit;
 fi
 
@@ -43,36 +45,73 @@ if [[ ! -d $outdirpath ]]; then
     }
 fi
 
-for ((i=1; i<=$njobs; i++))
+# Creating the workflow
+if [[ $run_on_ifarm -ne 1 ]]; then
+    swif2 create $workflowname
+else
+    echo -e "\nRunning all jobs on ifarm!\n"
+fi
+
+for ((i=$fjobid; i<$((fjobid+njobs)); i++))
 do
     # lets submit g4sbs jobs first
-    outfilename=$preinit'_job_'$i'.root'
+    outfilebase=$preinit'_job_'$i
     postscript=$preinit'_job_'$i'.mac'
     g4sbsjobname=$preinit'_job_'$i
 
-    g4sbsscript='/work/halla/sbs/pdbforce/jlab-HPC/run-g4sbs-simu.sh'
+    g4sbsscript=$SCRIPT_DIR'/run-g4sbs-simu.sh'
 
-    swif2 add-job -workflow $workflowname -partition production -name $g4sbsjobname -cores 1 -disk 5GB -ram 1500MB $g4sbsscript $preinit $postscript $nevents $outfilename $outdirpath
+    if [[ $run_on_ifarm -ne 1 ]]; then
+	swif2 add-job -workflow $workflowname -partition production -name $g4sbsjobname -cores 1 -disk 5GB -ram 1500MB $g4sbsscript $preinit $postscript $nevents $outfilebase $outdirpath $run_on_ifarm
+    else
+	$g4sbsscript $preinit $postscript $nevents $outfilebase $outdirpath $run_on_ifarm
+    fi
+
+    # time to aggregate g4sbs job summary
+    aggsuminfile=$outdirpath'/'$preinit'_job_'$i'.csv'
+    aggsumjobname=$preinit'_asum_job_'$i
+    aggsumoutfile=$outdirpath'/'$preinit'_summary.csv'
+
+    aggsumscript=$SCRIPT_DIR'/agg-g4sbs-job-summary.sh'
+
+    if [[ ($i == 0) || (! -f $g4sbssumtable) ]]; then
+	$aggsumscript $aggsuminfile '1' $aggsumoutfile
+    fi
+    if [[ $run_on_ifarm -ne 1 ]]; then
+	swif2 add-job -workflow $workflowname -antecedent $g4sbsjobname -partition production -name $aggsumjobname -cores 1 -disk 1GB -ram 150MB $aggsumscript $aggsuminfile '0' $aggsumoutfile
+    else
+	$aggsumscript $aggsuminfile '0' $aggsumoutfile
+    fi
 
     # now, it's time for digitization
     txtfile=$preinit'_job_'$i'.txt'
     sbsdigjobname=$preinit'_digi_job_'$i
-    sbsdiginfile=$outdirpath'/'$outfilename
+    sbsdiginfile=$outdirpath'/'$outfilebase'.root'
 
-    sbsdigscript='/work/halla/sbs/pdbforce/jlab-HPC/run-sbsdig.sh'
+    sbsdigscript=$SCRIPT_DIR'/run-sbsdig.sh'
     
-    swif2 add-job -workflow $workflowname -antecedent $g4sbsjobname -partition production -name $sbsdigjobname -cores 1 -disk 5GB -ram 1500MB $sbsdigscript $txtfile $sbsdiginfile
+    if [[ $run_on_ifarm -ne 1 ]]; then
+	swif2 add-job -workflow $workflowname -antecedent $g4sbsjobname -partition production -name $sbsdigjobname -cores 1 -disk 5GB -ram 1500MB $sbsdigscript $txtfile $sbsdiginfile $run_on_ifarm
+    else
+	$sbsdigscript $txtfile $sbsdiginfile $run_on_ifarm
+    fi
 
     # finally, lets replay the digitized data
     digireplayinfile=$preinit'_job_'$i
     digireplayjobname=$preinit'_digi_replay_job_'$i
 
-    digireplayscript='/work/halla/sbs/pdbforce/jlab-HPC/run-digi-replay.sh'
+    digireplayscript=$SCRIPT_DIR'/run-digi-replay.sh'
     
-    swif2 add-job -workflow $workflowname -antecedent $sbsdigjobname -partition production -name $digireplayjobname -cores 1 -disk 5GB -ram 1500MB $digireplayscript $digireplayinfile $outdirpath
+    if [[ $run_on_ifarm -ne 1 ]]; then
+	swif2 add-job -workflow $workflowname -antecedent $sbsdigjobname -partition production -name $digireplayjobname -cores 1 -disk 5GB -ram 1500MB $digireplayscript $digireplayinfile $outdirpath $run_on_ifarm
+    else
+	$digireplayscript $digireplayinfile $sbsconfig $outdirpath $run_on_ifarm
+    fi
 done
 
 # run the workflow and then print status
-swif2 run $workflowname
-echo -e "\n Getting workflow status.. [may take a few minutes!] \n"
-swif2 status $workflowname
+if [[ $run_on_ifarm -ne 1 ]]; then
+    swif2 run $workflowname
+    echo -e "\n Getting workflow status.. [may take a few minutes!] \n"
+    swif2 status $workflowname
+fi

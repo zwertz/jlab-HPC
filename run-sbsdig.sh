@@ -12,8 +12,17 @@
 #SBATCH --account=halla
 #SBATCH --mem-per-cpu=1500
 
-#SWIF_JOB_WORK_DIR=$PWD # for testing purposes
-echo 'swif_job_work_dir='$SWIF_JOB_WORK_DIR
+# list of arguments
+txtfile=$1 # .txt file containing input file paths
+infilename=$2
+run_on_ifarm=$3
+
+ifarmworkdir=${PWD}
+if [[ $isifarm == 1 ]]; then
+    SWIF_JOB_WORK_DIR=$ifarmworkdir
+    echo -e "Running all jobs on ifarm!"
+fi
+echo 'Work directory = '$SWIF_JOB_WORK_DIR
 
 MODULES=/etc/profile.d/modules.sh 
 
@@ -37,10 +46,10 @@ source $LIBSBSDIG/bin/sbsdigenv.sh
 # run the sbsdig command
 dbfile=$LIBSBSDIG/db/db_gmn_conf.dat
 
-txtfile=$1 # .txt file containing input file paths
-infilename=$2
-
+# creating input text file
 echo $infilename >>$txtfile
 
 sbsdig $dbfile $txtfile
 
+# cleaning up the work directory
+rm $txtfile

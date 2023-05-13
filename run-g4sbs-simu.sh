@@ -12,11 +12,20 @@
 #SBATCH --account=halla
 #SBATCH --mem-per-cpu=1500
 
-echo 'working directory ='
-echo $PWD
+# list of arguments
+preinit=$1
+postscript=$2
+nevents=$3
+outfilebase=$4
+outdirpath=$5
+run_on_ifarm=$6
 
-#SWIF_JOB_WORK_DIR=$PWD # for testing purposes
-echo 'swif_job_work_dir='$SWIF_JOB_WORK_DIR
+ifarmworkdir=${PWD}
+if [[ $run_on_ifarm == 1 ]]; then
+    SWIF_JOB_WORK_DIR=$ifarmworkdir
+    echo -e "Running all jobs on ifarm!"
+fi
+echo -e 'Work directory = '$SWIF_JOB_WORK_DIR
 
 MODULES=/etc/profile.d/modules.sh 
 
@@ -37,17 +46,10 @@ ldd /work/halla/sbs/pdbforce/G4SBS/install/bin/g4sbs |& grep not
 export G4SBS=/work/halla/sbs/pdbforce/G4SBS/install
 source $G4SBS/bin/g4sbs.sh
 
-# run the g4sbs command
-preinit=$1
-postscript=$2
-nevents=$3
-outfilename=$4
-outdirpath=$5
-
-echo '/g4sbs/filename '$4 >>$postscript
-echo '/g4sbs/run '$3 >>$postscript
-
-cat $postscript
+# creating post script
+echo '/g4sbs/filename '$outfilebase'.root' >>$postscript
+echo '/g4sbs/run '$nevents >>$postscript
+#cat $postscript
 
 g4sbs --pre=$preinit'.mac' --post=$postscript 
 
@@ -55,4 +57,8 @@ g4sbs --pre=$preinit'.mac' --post=$postscript
 if [[ ! -d $outdirpath ]]; then
     mkdir $outdirpath
 fi
-mv $outfilename $outdirpath
+mv $outfilebase'.root' $outdirpath
+mv $outfilebase'.csv' $outdirpath
+
+# clean up the work directory
+rm $postscript

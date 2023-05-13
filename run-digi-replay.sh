@@ -12,11 +12,18 @@
 #SBATCH --account=halla
 #SBATCH --mem-per-cpu=1500
 
-echo 'working directory ='
-echo $PWD
+# list of arguments
+inputfile=$1
+sbsconfig=$2
+datadir=$3
+run_on_ifarm=$4
 
-SWIF_JOB_WORK_DIR=$PWD
-echo 'swif_job_work_dir='$SWIF_JOB_WORK_DIR
+ifarmworkdir=${PWD}
+if [[ $run_on_ifarm == 1 ]]; then
+    SWIF_JOB_WORK_DIR=$ifarmworkdir
+    echo -e "Running all jobs on ifarm!"
+fi
+echo -e 'Work directory = '$SWIF_JOB_WORK_DIR
 
 MODULES=/etc/profile.d/modules.sh 
 
@@ -29,9 +36,8 @@ module use /apps/modulefiles
 fi 
 
 # setup farm environments
-source /site/12gev_phys/softenv.sh 2.4
-module load gcc/9.2.0 
-#ldd /work/halla/sbs/ANALYZER/install/bin/analyzer |& grep not
+source /site/12gev_phys/softenv.sh 2.5
+#module load gcc/9.2.0 
 ldd /work/halla/sbs/pdbforce/ANALYZER/install/bin/analyzer |& grep not
 
 # setup analyzer specific environments
@@ -42,19 +48,16 @@ source /work/halla/sbs/pdbforce/SBSOFFLINE/install/bin/sbsenv.sh
 export SBS_REPLAY=/work/halla/sbs/pdbforce/SBS-replay
 export ANALYZER_CONFIGPATH=$SBS_REPLAY/replay
 export DB_DIR=$SBS_REPLAY/DB_MC
-
 export OUT_DIR=$SWIF_JOB_WORK_DIR
-#export LOG_DIR=$SWIF_JOB_WORK_DIR
-
-# executing the replay script
-inputfile=$1
-datadir=$2
-
 export DATA_DIR=$datadir
 
 cp $SBS/run_replay_here/.rootrc $SWIF_JOB_WORK_DIR
 
-analyzer -b -q 'replay_gmn_mc.C+("'$inputfile'")'
+analyzer -b -q 'replay_gmn_mc.C+("'$inputfile'",'$sbsconfig')'
 
-outputfile=$OUT_DIR'/replayed_'$inputfile'.root'
-mv $outputfile $DATA_DIR
+# move output files
+mv $OUT_DIR'/replayed_'$inputfile'.root' $DATA_DIR
+mv $OUT_DIR'/replayed_'$inputfile'.log' $DATA_DIR
+
+# clean up the work directory
+rm .rootrc
