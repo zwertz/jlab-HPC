@@ -30,7 +30,7 @@
 #    run-digi-replay.sh | All these scripts must be present in the $SCRIPT_DIR        #
 # ----------------------------------------------------------------------------------- #
 
-# Setting environments for SIMC & G4SBS work directories & script directory
+# Setting necessary environments (ONLY User Specific part)
 export SIMC=/w/halla-scshelf2102/sbs/pdbforce/SIMC/simc_gfortran
 export G4SBS=/w/halla-scshelf2102/sbs/pdbforce/G4SBS/install
 export SCRIPT_DIR=/w/halla-scshelf2102/sbs/pdbforce/jlab-HPC

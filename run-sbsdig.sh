@@ -17,6 +17,10 @@ txtfile=$1 # .txt file containing input file paths
 infilename=$2
 run_on_ifarm=$3
 
+# paths to necessary libraries (ONLY User specific part) ---- #
+export LIBSBSDIG=/work/halla/sbs/pdbforce/LIBSBSDIG/install
+# ----------------------------------------------------------- #
+
 ifarmworkdir=${PWD}
 if [[ $isifarm == 1 ]]; then
     SWIF_JOB_WORK_DIR=$ifarmworkdir
@@ -37,10 +41,9 @@ fi
 # setup farm environments
 source /site/12gev_phys/softenv.sh 2.4
 module load gcc/9.2.0 
-ldd /work/halla/sbs/pdbforce/LIBSBSDIG/install/bin/sbsdig |& grep not
+ldd $LIBSBSDIG/bin/sbsdig |& grep not
 
 # Setup sbsdig specific environments
-export LIBSBSDIG=/work/halla/sbs/pdbforce/LIBSBSDIG/install
 source $LIBSBSDIG/bin/sbsdigenv.sh
 
 # run the sbsdig command

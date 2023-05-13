@@ -18,6 +18,12 @@ sbsconfig=$2
 datadir=$3
 run_on_ifarm=$4
 
+# paths to necessary libraries (ONLY User specific part) ---- #
+export ANALYZER=/work/halla/sbs/pdbforce/ANALYZER/install
+export SBSOFFLINE=/work/halla/sbs/pdbforce/SBSOFFLINE/install
+export SBS_REPLAY=/work/halla/sbs/pdbforce/SBS-replay
+# ----------------------------------------------------------- #
+
 ifarmworkdir=${PWD}
 if [[ $run_on_ifarm == 1 ]]; then
     SWIF_JOB_WORK_DIR=$ifarmworkdir
@@ -38,14 +44,12 @@ fi
 # setup farm environments
 source /site/12gev_phys/softenv.sh 2.5
 #module load gcc/9.2.0 
-ldd /work/halla/sbs/pdbforce/ANALYZER/install/bin/analyzer |& grep not
+ldd $ANALYZER/bin/analyzer |& grep not
 
 # setup analyzer specific environments
-export ANALYZER=/work/halla/sbs/pdbforce/ANALYZER/install
 source $ANALYZER/bin/setup.sh
-source /work/halla/sbs/pdbforce/SBSOFFLINE/install/bin/sbsenv.sh
+source $SBSOFFLINE/bin/sbsenv.sh
 
-export SBS_REPLAY=/work/halla/sbs/pdbforce/SBS-replay
 export ANALYZER_CONFIGPATH=$SBS_REPLAY/replay
 export DB_DIR=$SBS_REPLAY/DB_MC
 export OUT_DIR=$SWIF_JOB_WORK_DIR

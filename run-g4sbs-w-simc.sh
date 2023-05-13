@@ -21,6 +21,10 @@ outdirpath=$5
 simcoutfile=$6
 run_on_ifarm=$7
 
+# paths to necessary libraries (ONLY User specific part) ---- #
+export G4SBS=/work/halla/sbs/pdbforce/G4SBS/install
+# ----------------------------------------------------------- #
+
 ifarmworkdir=${PWD}
 if [[ $run_on_ifarm == 1 ]]; then
     SWIF_JOB_WORK_DIR=$ifarmworkdir
@@ -41,10 +45,9 @@ fi
 # setup farm environments
 source /site/12gev_phys/softenv.sh 2.4
 module load gcc/9.2.0 
-ldd /work/halla/sbs/pdbforce/G4SBS/install/bin/g4sbs |& grep not
+ldd $G4SBS/bin/g4sbs |& grep not
 
 # Setup g4sbs specific environments
-export G4SBS=/work/halla/sbs/pdbforce/G4SBS/install
 source $G4SBS/bin/g4sbs.sh
 
 # creating post script

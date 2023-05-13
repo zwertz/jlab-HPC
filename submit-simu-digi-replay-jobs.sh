@@ -10,7 +10,7 @@
 # ** Do not tamper with this sticker! Log any updates to the script above.  #
 # ------------------------------------------------------------------------- #
 
-# Setting environments for SIMC & G4SBS work directories & script directory
+# Setting necessary environments (ONLY User Specific part)
 export G4SBS=/w/halla-scshelf2102/sbs/pdbforce/G4SBS/install
 export SCRIPT_DIR=/w/halla-scshelf2102/sbs/pdbforce/jlab-HPC
 
@@ -103,7 +103,7 @@ do
     digireplayscript=$SCRIPT_DIR'/run-digi-replay.sh'
     
     if [[ $run_on_ifarm -ne 1 ]]; then
-	swif2 add-job -workflow $workflowname -antecedent $sbsdigjobname -partition production -name $digireplayjobname -cores 1 -disk 5GB -ram 1500MB $digireplayscript $digireplayinfile $outdirpath $run_on_ifarm
+	swif2 add-job -workflow $workflowname -antecedent $sbsdigjobname -partition production -name $digireplayjobname -cores 1 -disk 5GB -ram 1500MB $digireplayscript $digireplayinfile $sbsconfig $outdirpath $run_on_ifarm
     else
 	$digireplayscript $digireplayinfile $sbsconfig $outdirpath $run_on_ifarm
     fi
