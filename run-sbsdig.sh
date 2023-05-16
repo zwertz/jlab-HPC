@@ -16,9 +16,10 @@
 txtfile=$1 # .txt file containing input file paths
 infilename=$2
 run_on_ifarm=$3
+libsbsdigenv=$4
 
 # paths to necessary libraries (ONLY User specific part) ---- #
-export LIBSBSDIG=/work/halla/sbs/pdbforce/LIBSBSDIG/install
+export LIBSBSDIG=$libsbsdigenv
 # ----------------------------------------------------------- #
 
 ifarmworkdir=${PWD}

@@ -1,7 +1,6 @@
 # ------------------------------------------------------------------------- #
-# This script will be used to extract info from SIMC infile and generate a  #
-# CSV report file with necessary information for normalization per job      #
-# after all the jobs are finished .                                         #
+# This is a multi-purpose utility script. FOr instance it contains methods  #
+# to create job summary files for SIMC and g4sbs jobs.                      #
 # ---------                                                                 #
 # P. Datta <pdbforce@jlab.org> CREATED 04-20-2023                           #
 # ---------                                                                 #

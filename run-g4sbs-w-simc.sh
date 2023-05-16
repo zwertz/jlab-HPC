@@ -20,9 +20,10 @@ outfilebase=$4
 outdirpath=$5
 simcoutfile=$6
 run_on_ifarm=$7
+g4sbsenv=$8
 
 # paths to necessary libraries (ONLY User specific part) ---- #
-export G4SBS=/work/halla/sbs/pdbforce/G4SBS/install
+export G4SBS=$g4sbsenv
 # ----------------------------------------------------------- #
 
 ifarmworkdir=${PWD}

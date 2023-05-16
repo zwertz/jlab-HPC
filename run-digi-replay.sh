@@ -15,13 +15,17 @@
 # list of arguments
 inputfile=$1
 sbsconfig=$2
-datadir=$3
-run_on_ifarm=$4
+maxevents=$3
+datadir=$4
+run_on_ifarm=$5
+analyzerenv=$6
+sbsofflineenv=$7
+sbsreplayenv=$8
 
 # paths to necessary libraries (ONLY User specific part) ---- #
-export ANALYZER=/work/halla/sbs/pdbforce/ANALYZER/install
-export SBSOFFLINE=/work/halla/sbs/pdbforce/SBSOFFLINE/install
-export SBS_REPLAY=/work/halla/sbs/pdbforce/SBS-replay
+export ANALYZER=$analyzerenv
+export SBSOFFLINE=$sbsofflineenv
+export SBS_REPLAY=$sbsreplayenv
 # ----------------------------------------------------------- #
 
 ifarmworkdir=${PWD}
@@ -46,7 +50,7 @@ source /site/12gev_phys/softenv.sh 2.5
 #module load gcc/9.2.0 
 ldd $ANALYZER/bin/analyzer |& grep not
 
-# setup analyzer specific environments
+# setting analyzer specific paths
 source $ANALYZER/bin/setup.sh
 source $SBSOFFLINE/bin/sbsenv.sh
 
@@ -55,9 +59,14 @@ export DB_DIR=$SBS_REPLAY/DB_MC
 export OUT_DIR=$SWIF_JOB_WORK_DIR
 export DATA_DIR=$datadir
 
+# handling any existing .rootrc file in the work directory
+# mainly necessary while running the jobs on ifarm
+if [[ -f .rootrc ]]; then
+    mv .rootrc .rootrc_temp
+fi
 cp $SBS/run_replay_here/.rootrc $SWIF_JOB_WORK_DIR
 
-analyzer -b -q 'replay_gmn_mc.C+("'$inputfile'",'$sbsconfig')'
+analyzer -b -q 'replay_gmn_mc.C+("'$inputfile'",'$sbsconfig','$maxevents')'
 
 # move output files
 mv $OUT_DIR'/replayed_'$inputfile'.root' $DATA_DIR
@@ -65,3 +74,6 @@ mv $OUT_DIR'/replayed_'$inputfile'.log' $DATA_DIR
 
 # clean up the work directory
 rm .rootrc
+if [[ -f .rootrc_temp ]]; then
+    mv .rootrc_temp .rootrc
+fi

@@ -17,7 +17,7 @@
 #    b. SBS configuration (Valid options: 4,7,11,14,8,9)                              #
 #    c. First job id.                                                                 #
 #    d. Total no. of jobs to submit.                                                  #
-#    e. Run all the jobs on ifarm or batch farm. (1=>ifarm)                           #
+#    e. Flag to force all jobs to run on ifarm. (1=>YES) Very useful for debugging.   #
 # 2. Total no. of events per g4sbs job gets determined by SIMC infile ("ngen" flag)   #
 # 3. Be sure to edit "workflowname" variable appropriately before executing script.   #
 # 4. Be sure to edit "outdirpath" variable appropriately before executing script.     #
@@ -31,9 +31,13 @@
 # ----------------------------------------------------------------------------------- #
 
 # Setting necessary environments (ONLY User Specific part)
+export SCRIPT_DIR=/w/halla-scshelf2102/sbs/pdbforce/jlab-HPC
 export SIMC=/w/halla-scshelf2102/sbs/pdbforce/SIMC/simc_gfortran
 export G4SBS=/w/halla-scshelf2102/sbs/pdbforce/G4SBS/install
-export SCRIPT_DIR=/w/halla-scshelf2102/sbs/pdbforce/jlab-HPC
+export LIBSBSDIG=/work/halla/sbs/pdbforce/LIBSBSDIG/install
+export ANALYZER=/work/halla/sbs/pdbforce/ANALYZER/install
+export SBSOFFLINE=/work/halla/sbs/pdbforce/SBSOFFLINE/install
+export SBS_REPLAY=/work/halla/sbs/pdbforce/SBS-replay
 
 # ------ Variables needed to be set properly for successful execution ------ #
 # -------------------------------------------------------------------------- #
@@ -42,7 +46,7 @@ export SCRIPT_DIR=/w/halla-scshelf2102/sbs/pdbforce/jlab-HPC
 # file extention and should be located at $G4SBS/scripts.
 infile=$1
 sbsconfig=$2    # SBS configuration (Valid options: 4,7,11,14,8,9)
-# No. of jobs to submit (# to generate per job get set by SIMC infile ("ngen" flag))
+# No. of jobs to submit (NOTE: # events to generate per job get set by SIMC infile ("ngen" flag))
 fjobid=$3       # first job id
 njobs=$4        # total no. of jobs to submit 
 run_on_ifarm=$5 # 1=>Yes (If true, runs all jobs on ifarm)
@@ -68,6 +72,29 @@ if [[ "$#" -ne 5 ]]; then
     echo -e ' ** Make sure "workflowname" & "outdirpath" variables are set properly in the script.'
     echo -e ' ** Read the "Notes and Instructions" block at the top of script for more information.\n'
     exit;
+else 
+    echo -e '\n------'
+    echo -e ' Check the following variable(s):'
+    if [[ $run_on_ifarm -ne 1 ]]; then
+	echo -e ' "workflowname" : '$workflowname''
+    fi
+    echo -e ' "outdirpath"   : '$outdirpath' \n------'
+    while true; do
+	read -p "Do they look good? [y/n] " yn
+	echo -e ""
+	case $yn in
+	    [Yy]*) 
+		break; ;;
+	    [Nn]*) 
+		if [[ $run_on_ifarm -ne 1 ]]; then
+		    read -p "Enter desired workflowname : " temp1
+		    workflowname=$temp1
+		fi
+		read -p "Enter desired outdirpath   : " temp2
+		outdirpath=$temp2		
+		break; ;;
+	esac
+    done
 fi
 
 # Sanity check 2: Create the output directory if necessary
@@ -160,9 +187,9 @@ do
     g4sbsscript=$SCRIPT_DIR'/run-g4sbs-w-simc.sh'
 
     if [[ $run_on_ifarm -ne 1 ]]; then
-	swif2 add-job -workflow $workflowname -partition production -name $g4sbsjobname -cores 1 -disk 5GB -ram 1500MB $g4sbsscript $infile $postscript $nevents $outfilebase $outdirpath $simcoutfile $run_on_ifarm
+	swif2 add-job -workflow $workflowname -partition production -name $g4sbsjobname -cores 1 -disk 5GB -ram 1500MB $g4sbsscript $infile $postscript $nevents $outfilebase $outdirpath $simcoutfile $run_on_ifarm $G4SBS
     else
-	$g4sbsscript $infile $postscript $nevents $outfilebase $outdirpath $simcoutfile $run_on_ifarm 
+	$g4sbsscript $infile $postscript $nevents $outfilebase $outdirpath $simcoutfile $run_on_ifarm $G4SBS
     fi
 
     # now, it's time for digitization
@@ -173,9 +200,9 @@ do
     sbsdigscript=$SCRIPT_DIR'/run-sbsdig.sh'
     
     if [[ $run_on_ifarm -ne 1 ]]; then
-	swif2 add-job -workflow $workflowname -antecedent $g4sbsjobname -partition production -name $sbsdigjobname -cores 1 -disk 5GB -ram 1500MB $sbsdigscript $txtfile $sbsdiginfile $run_on_ifarm
+	swif2 add-job -workflow $workflowname -antecedent $g4sbsjobname -partition production -name $sbsdigjobname -cores 1 -disk 5GB -ram 1500MB $sbsdigscript $txtfile $sbsdiginfile $run_on_ifarm $LIBSBSDIG
     else
-	$sbsdigscript $txtfile $sbsdiginfile $run_on_ifarm 
+	$sbsdigscript $txtfile $sbsdiginfile $run_on_ifarm $LIBSBSDIG
     fi
 
     # finally, lets replay the digitized data
@@ -185,9 +212,9 @@ do
     digireplayscript=$SCRIPT_DIR'/run-digi-replay.sh'
     
     if [[ $run_on_ifarm -ne 1 ]]; then
-	swif2 add-job -workflow $workflowname -antecedent $sbsdigjobname -partition production -name $digireplayjobname -cores 1 -disk 5GB -ram 1500MB $digireplayscript $digireplayinfile $sbsconfig $outdirpath $run_on_ifarm
+	swif2 add-job -workflow $workflowname -antecedent $sbsdigjobname -partition production -name $digireplayjobname -cores 1 -disk 5GB -ram 1500MB $digireplayscript $digireplayinfile $sbsconfig -1 $outdirpath $run_on_ifarm $ANALYZER $SBSOFFLINE $SBS_REPLAY
     else
-	$digireplayscript $digireplayinfile $sbsconfig $outdirpath $run_on_ifarm 
+	$digireplayscript $digireplayinfile $sbsconfig -1 $outdirpath $run_on_ifarm $ANALYZER $SBSOFFLINE $SBS_REPLAY
     fi
 done
 
