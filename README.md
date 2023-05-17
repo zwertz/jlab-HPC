@@ -10,6 +10,11 @@
 ## 1. Design: 
 
 ## 2. Prerequisites:
+- Most up-to-date build of the following libraries:
+ - [g4sbs]() - Necessary for g4sbs simulation jobs
+ - [LIBSBSDIG]() - Necessary for digitization (sbsdig) jobs
+ - [analyzer]() - Necessary for replay jobs
+ - [SBS-offline]() - Necessary for   
  
 ## 3. Quick start:
 
@@ -23,6 +28,6 @@ An exhaustive list of all the SWIF2 commands can be found [here](https://scicomp
 - `swif2 retry-jobs <wf_name> -problem <pb_type>` - Reruns all the abandoned jobs in `wf_name` with problem type `pb_type`
 
 ## 5. Contact:
-In case of any questions or concerns please contact the authors,
+In case of any questions or concerns please contact the author(s),
 >Authors: Provakar Datta (UConn) <br> 
 >Contact: <pdbforce@jlab.org> (Provakar)
