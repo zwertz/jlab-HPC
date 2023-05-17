@@ -7,6 +7,7 @@
 # ** Do not tamper with this sticker! Log any updates to the script above.  #
 # ------------------------------------------------------------------------- #
 
+import re
 import sys
 
 def read_file(infile):
@@ -15,6 +16,12 @@ def read_file(infile):
     with open(infile, 'r') as f:
         lines = f.readlines()
     return lines
+
+def get_job_id(infile):
+    '''Returns job id from a given input file.
+       Naming convention: *_job_<jobid>.<extention>'''
+    regex = r"_job_(\d+)\.\w+"
+    return re.findall(regex, infile)[0]
 
 def grab_simc_param_value(infile, param):
     '''Grabs the value of a chosen parameter from SIMC infile'''
@@ -31,59 +38,53 @@ def strip_path(filewpath):
     lpos = filewpath.strip('/').rfind('/')
     return filewpath[lpos+1:]
 
-def grab_simc_norm_factors(histfile, title_or_data):
+def read_simc_histfile(histfile):
+    '''Reads SIMC hist file and returns a dictionary'''
+    result = {}
+    regex = r"\s+([A-Za-z\s{0,1}\(\)/]+)\s+=\s+([0-9E?\+?\.]+)"
+    lines = read_file(histfile)
+    for line in lines:
+        if 'GeV^2' not in line:
+            temp = re.findall(regex, line)
+            if temp: result[temp[0][0].strip()] = temp[0][1]
+    return result
+
+def grab_simc_norm_factors(histfile, is_title):
     '''Grabs important normalization factors from SIMC .hist file'''
-    # Retain the order of paramters in which they appear in .hist file
-    params = ['Ngen (request)', 'Ntried', 'charge', 'luminosity', 'genvol', 'Random Seed'] 
-    titles = ['jobid', 'Nthrown', 'Ntried', 'charge(mC)', 'luminosity(ub^-1)', 'genvol(MeV*sr^2)', 'RndmSeed']
-    chars_to_strip = ' mCub\n' #charecters to strip from the right side of equality
-    if int(title_or_data) != 1:
+    titles = ['jobid', 'Nthrown', 'Ntried', 'genvol(MeV*sr^2)', 'luminosity(ub^-1)', 'ebeam(GeV)', 'charge(mC)', 'RndmSeed']
+    params = ['Ngen (request)', 'Ntried', 'genvol', 'luminosity', 'Ebeam', 'charge', 'Random Seed'] 
+    if int(is_title) != 1:
         values = []
-        jobid = histfile.split('_job_', 1)[1].strip('.hist')
-        lines = read_file(histfile)
-        values.append(jobid)
-        for line in lines:
-            for item in params:
-                if (item in line) and ('GeV' not in line):
-                    values.append(line.split("=", 1)[1].split("^")[0].strip(chars_to_strip))
-                    break
-    if int(title_or_data) != 1: 
+        values.append(get_job_id(histfile))
+        flags = read_simc_histfile(histfile)
+        for item in params: values.append(flags[item])
         return ','.join(str(e) for e in values)
-    else: # return the title row
+    else: 
         return ','.join(str(e) for e in titles)
 
-def grab_g4sbs_norm_factors(csvfile, title_or_data):
-    '''Grabs important normalization factors from G4SBS .csv file'''
-    # Retain the order of paramters in which they appear in .hist file
-    params = ['N_generated', 'N_tries', 'Beam_Energy', 'Beam_Current', 'Generation_Volume', 'Luminosity'] 
-    titles = ['jobid', 'Nthrown', 'Ntried', 'Ebeam(GeV)', 'Ibeam(muA)', 'genvol(sr)', 'luminosity(s^-1cm^-2)']
-    chars_to_strip = ' \n' #charecters to strip from the right side of equality
-    if int(title_or_data) != 1:
+def read_g4sbs_csvfile(csvfile):
+    '''Reads g4sbs CSV file and returns a dictionary'''
+    result = {}
+    regex = r"(.*),(.*)"
+    lines = read_file(csvfile)
+    for line in lines: 
+        temp = re.findall(regex, line)
+        if temp: result[temp[0][0]] = temp[0][1]
+    return result
+
+def grab_g4sbs_norm_factors(csvfile, is_title):
+    '''Grabs important normalization factors from g4sbs .csv file'''
+    titles = ['jobid', 'Nthrown', 'Ntried', 'genvol(sr)', 'luminosity(s^-1cm^-2)', 'ebeam(GeV)', 'ibeam(muA)']
+    params = ['N_generated', 'N_tries', 'Generation_Volume', 'Luminosity_s-1_cm-2', 'Beam_Energy_GeV', 'Beam_Current_muA']
+    if int(is_title) != 1:
         values = []
-        jobid = csvfile.split('_job_', 1)[1].strip('.csv')
-        lines = read_file(csvfile)
-        values.append(jobid)
-        for line in lines:
-            for item in params:
-                if item in line:
-                    values.append(line.split(",", 1)[1].strip(chars_to_strip))
-                    break
-    if int(title_or_data) != 1: 
+        values.append(get_job_id(csvfile))
+        flags = read_g4sbs_csvfile(csvfile)
+        for item in params: values.append(flags[item])
         return ','.join(str(e) for e in values)
-    else: # return the title row
+    else: 
         return ','.join(str(e) for e in titles)
 
-# def keep_unique_lines(infile):
-#     '''Modifies a file to keep just its unique lines'''
-#     htable = {}
-#     with open(infile, 'r') as f:
-#         line = f.readlines()
-#         if str(line) not in htable:
-#             htable[str(line)] = True
-#     with open(infile, 'w') as f:
-#         for key in htable.keys():
-#             f.write(key)
-        
 def main(*arg):
     '''Calls the function of choice depending on its name'''
     if arg[0] == 'grab_simc_param_value':
@@ -92,8 +93,6 @@ def main(*arg):
         print(grab_simc_norm_factors(arg[1], arg[2]))
     elif arg[0] == 'grab_g4sbs_norm_factors':
         print(grab_g4sbs_norm_factors(arg[1], arg[2]))
-    elif arg[0] == 'keep_unique_lines':
-        print(keep_unique_lines(arg[1]))
 
 if __name__== "__main__":
     main(*sys.argv[1:])
