@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------- #
-# This is a multi-purpose utility script. FOr instance it contains methods  #
+# This is a multi-purpose utility script. For instance, it contains methods #
 # to create job summary files for SIMC and g4sbs jobs.                      #
 # ---------                                                                 #
 # P. Datta <pdbforce@jlab.org> CREATED 04-20-2023                           #
