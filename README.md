@@ -1,4 +1,4 @@
-**jlab-HPC** repository contains scripts to submit and run various simulation and analysis jobs to Jefferson Lab's HPC clusters using the [Scientific Workflow Indefatigable Factotum](https://scicomp.jlab.org/docs/swif2) (SWIF2) system. All the jobs can be chosen to run on ifarm as well for the purpose of debugging and convenience.
+**jlab-HPC** repository contains scripts to submit and run various simulation and analysis jobs to Jefferson Lab's HPC clusters using the [Scientific Workflow Indefatigable Factotum](https://scicomp.jlab.org/docs/swif2) (SWIF2) system. All the jobs can be chosen to run on ifarm as well for the purpose of debugging.
 
 ## Contents
 1. Design
