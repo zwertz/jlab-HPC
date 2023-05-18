@@ -11,10 +11,13 @@
 
 ## 2. Prerequisites:
 - Most up-to-date build of the following libraries:
- - [g4sbs]() - Necessary for g4sbs simulation jobs
- - [LIBSBSDIG]() - Necessary for digitization (sbsdig) jobs
- - [analyzer]() - Necessary for replay jobs
- - [SBS-offline]() - Necessary for   
+  - [simc_gfortran](https://github.com/MarkKJones/simc_gfortran) - Necessary for SIMC simulation jobs. Build from the `bigbite` branch.
+  - [g4sbs](https://github.com/JeffersonLab/g4sbs/tree/master) - Necessary for g4sbs simulation jobs. Build from the `uconn_dev` branch.
+  - [libsbsdig](https://github.com/JeffersonLab/libsbsdig) - Necessary for digitization (sbsdig) jobs.
+  - [analyzer](https://github.com/JeffersonLab/analyzer) - Necessary for replay jobs.
+  - [SBS-offline](https://github.com/JeffersonLab/SBS-offline) - Necessary for replay jobs.
+  - [SBS-replay](https://github.com/JeffersonLab/SBS-replay) - Necessary for replay jobs.
+- `python3` 
  
 ## 3. Quick start:
 
