@@ -8,6 +8,7 @@
 5. Contact
 
 ## 1. Design: 
+....
 
 ## 2. Prerequisites:
 - Most up-to-date build of the following libraries:
@@ -20,6 +21,7 @@
 - `python3` 
  
 ## 3. Quick start:
+....
 
 ## 4. Useful SWIF2 commands:
 An exhaustive list of all the SWIF2 commands can be found [here](https://scicomp.jlab.org/cli/swif.html). Here is a small list of very useful and common SWIF2 commands:
