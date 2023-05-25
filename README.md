@@ -2,15 +2,22 @@
 
 ## Contents
 1. Design
-2. Prerequisites
-3. Quick start
-4. Useful SWIF2 commands
-5. Contact
+2. Processes
+3. Prerequisites
+4. Quick start
+5. Useful SWIF2 commands
+6. Contact
 
 ## 1. Design: 
-....
+There are mainly two different kind of scripts present in this repository: 
+1. **Run scripts** (name begins with `run-` keyword): Each of these scripts execute individual processes such as g4sbs simulation, digitization, etc. E.g. `run-g4sbs-simu.sh` executes g4sbs simulation jobs. Users shouldn't have to edit or modify these scripts.
+2. **Submit scripts** (name begins with `submit-` keyword): These are essentially wrapper scripts. Every run script has one (or more) corresponding submit script(s). Submit scripts take a few command line arguments and run the corresponding run script(s) accordingly. E.g. `submit-g4sbs-jobs.sh` script executes `run-g4sbs-simu.sh` script, which runs g4sbs simulations, according to the command line arguments (e.g. g4sbs macro name, no. of jobs, etc.) given by the user. They also sets the proper environment variables required by the run scripts. The environment variables are all listed at the beginning of each submit script. Since, environment variables are user specific, a first time user needs to set them properly at the beginning.
 
-## 2. Prerequisites:
+## 2. Processes:
+Here is a list of processess that can be executed using the scripts present in this repo:
+1. g4sbs simulation: 
+
+## 3. Prerequisites:
 - Most up-to-date build of the following libraries:
   - [simc_gfortran](https://github.com/MarkKJones/simc_gfortran) - Necessary for SIMC simulation jobs. Build from the `bigbite` branch.
   - [g4sbs](https://github.com/JeffersonLab/g4sbs/tree/master) - Necessary for g4sbs simulation jobs. Build from the `uconn_dev` branch.
@@ -20,10 +27,10 @@
   - [SBS-replay](https://github.com/JeffersonLab/SBS-replay) - Necessary for replay jobs.
 - `python3` 
  
-## 3. Quick start:
+## 4. Quick start:
 ....
 
-## 4. Useful SWIF2 commands:
+## 5. Useful SWIF2 commands:
 An exhaustive list of all the SWIF2 commands can be found [here](https://scicomp.jlab.org/cli/swif.html). Here is a small list of very useful and common SWIF2 commands:
 
 - `swif2 create <wf_name>` - Creates a SWIF2 workflow with name `wf_name` 
@@ -32,7 +39,7 @@ An exhaustive list of all the SWIF2 commands can be found [here](https://scicomp
 - `swif2 cancel <wf_name> -delete` - Cancels all the jobs in workflow `wf_name` and then deletes it 
 - `swif2 retry-jobs <wf_name> -problem <pb_type>` - Reruns all the abandoned jobs in `wf_name` with problem type `pb_type`
 
-## 5. Contact:
+## 6. Contact:
 In case of any questions or concerns please contact the author(s),
 >Authors: Provakar Datta (UConn) <br> 
 >Contact: <pdbforce@jlab.org> (Provakar)
