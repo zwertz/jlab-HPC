@@ -17,6 +17,11 @@ def read_file(infile):
         lines = f.readlines()
     return lines
 
+def write_file(list_of_data, outfile):
+    '''Writes the content of a list to a file'''
+    with open(outfile, 'w') as f:
+        f.write(''.join(list_of_data));
+
 def get_job_id(infile):
     '''Returns job id from a given input file.
        Naming convention: *_job_<jobid>.<extention>'''
@@ -85,6 +90,21 @@ def grab_g4sbs_norm_factors(csvfile, is_title):
     else: 
         return ','.join(str(e) for e in titles)
 
+def remove_duplicates(infile):
+    '''Removes adjacent duplicate lines. Will use to clean up root_hist'''
+    outfile = infile + '_temp'
+    ndotq = []
+    ulines = []
+    lines = read_file(infile)
+    for line in lines:
+        if ".q" not in line:
+            ndotq.append(line)
+    for l in range(len(ndotq)):
+        if (l == 0): ulines.append(ndotq[l])
+        elif ndotq[l-1] != ndotq[l]:
+            ulines.append(ndotq[l])
+    write_file(ulines, outfile)
+
 def main(*arg):
     '''Calls the function of choice depending on its name'''
     if arg[0] == 'grab_simc_param_value':
@@ -93,6 +113,8 @@ def main(*arg):
         print(grab_simc_norm_factors(arg[1], arg[2]))
     elif arg[0] == 'grab_g4sbs_norm_factors':
         print(grab_g4sbs_norm_factors(arg[1], arg[2]))
+    elif arg[0] == 'remove_duplicates':
+        print(remove_duplicates(arg[1]))
 
 if __name__== "__main__":
     main(*sys.argv[1:])
