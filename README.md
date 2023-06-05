@@ -15,7 +15,8 @@ There are mainly two different kind of scripts present in this repository:
 
 ## 2. Processes:
 Here is a list of processess that can be executed using the scripts present in this repo:
-1. g4sbs simulation: 
+1. g4sbs simulation: ....
+2. ....
 
 ## 3. Prerequisites:
 - Most up-to-date build of the following libraries:
