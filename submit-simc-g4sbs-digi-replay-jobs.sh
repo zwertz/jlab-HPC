@@ -52,11 +52,11 @@ njobs=$4        # total no. of jobs to submit
 run_on_ifarm=$5 # 1=>Yes (If true, runs all jobs on ifarm)
 # ----/\---- Above variables are taken as arguments to this script ---/\---- # 
 # Workflow name
-workflowname='ssdr-sbs4-sbs50p-elas-87T'
+workflowname='ssdr-sbs4-sbs50p-qe-65sf'
 # Specify a directory on volatile to store simc, g4sbs, sbsdig, & replayed outfiles.
 # Working on a single directory is convenient & safe for the above mentioned
 # four processes to run coherently without any error.
-outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output/simcSDR/test'
+outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output/fscan/sbspfmap_sbs4_sbs50p_simc_deeN_65sf'
 # -------------------------------------------------------------------------- #
 
 # Sanity check 1: Validating the number of arguments provided
@@ -154,6 +154,7 @@ fi
 for ((i=$fjobid; i<$((fjobid+njobs)); i++))
 do
     # lets generate SIMC events first
+    echo -e 'Generating SIMC events for job_'$i'.. [Will take a few seconds]'
     pushd $SIMC >/dev/null
     ./run_simc_tree $infile
     mv 'worksim/'$infile'.root' $simcoutdir'/'$infile'_job_'$i'.root' 

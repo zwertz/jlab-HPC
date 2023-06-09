@@ -12,11 +12,14 @@
 #SBATCH --account=halla
 #SBATCH --mem-per-cpu=150
 
-export SCRIPT_DIR=/w/halla-scshelf2102/sbs/pdbforce/jlab-HPC
-
 infile=$1
 istitle=$2
 outfile=$3
+scriptdirenv=$4
+
+# paths to necessary libraries (ONLY User specific part) ---- #
+export SCRIPT_DIR=$scriptdirenv
+# ----------------------------------------------------------- #
 
 if [[ $istitle -eq 1 ]]; then
     python3 $SCRIPT_DIR'/'utility.py 'grab_g4sbs_norm_factors' $infile $istitle > $outfile
