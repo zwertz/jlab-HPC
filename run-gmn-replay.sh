@@ -23,9 +23,9 @@ maxsegments=$6
 datadir=$7
 outdirpath=$8
 run_on_ifarm=$9
-analyzerenv=$10
-sbsofflineenv=$11
-sbsreplayenv=$12
+analyzerenv=${10}
+sbsofflineenv=${11}
+sbsreplayenv=${12}
 
 # paths to necessary libraries (ONLY User specific part) ---- #
 export ANALYZER=$analyzerenv
@@ -37,7 +37,6 @@ export DATA_DIR=$datadir
 ifarmworkdir=${PWD}
 if [[ $run_on_ifarm == 1 ]]; then
     SWIF_JOB_WORK_DIR=$ifarmworkdir
-    echo -e "Running all jobs on ifarm!"
 fi
 echo 'Work directory = '$SWIF_JOB_WORK_DIR
 
@@ -77,7 +76,8 @@ cp $SBS/run_replay_here/.rootrc $SWIF_JOB_WORK_DIR
 analyzer -b -q 'replay_gmn.C+('$runnum','$maxevents','$firstevent','\"$prefix\"','$firstsegment','$maxsegments')'
 
 outfilename=$OUT_DIR'/e1209019_*'$runnum'*.root'
-logfilename=$LOG_DIR'/replay_gmn_'$runnum'*.log' 
+#logfilename=$LOG_DIR'/replay_gmn_'$runnum'*.log' 
+logfilename=$LOG_DIR'/e1209019_*'$runnum'*.log' 
 
 # move output files
 mv $outfilename $outdirpath/rootfiles
