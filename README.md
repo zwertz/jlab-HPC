@@ -15,12 +15,12 @@ There are mainly two different kind of scripts present in this repository:
 
 ## 2. Processes:
 Here is a list of processess that can be executed using the scripts present in this repo:
-1. raw data reconstruction (replay):
-2. g4sbs simulation: ....
-3. digitization of simulated data (sbsdig): ....
-4. digitized data reconstruction: ....
-5. simulation, digitization, & replay in one go (in order): ....
-6. simulation using SIMC generator, digitization, & replay in one go (in order): ....
+1. raw data reconstruction (replay): Use `submit-gmn-jobs.sh` script.
+2. g4sbs simulation: Use `submit-g4sbs-jobs.sh` script.
+3. digitization of simulated data (sbsdig): Use `submit-sbsdig-job.sh` script.
+4. digitized data reconstruction: Use `submit-digireplay-jobs.sh` script.
+5. simulation, digitization, & replay in one go (in order): Use `submit-simu-digi-replay-jobs.sh` script.
+6. simulation using SIMC generator, digitization, & replay in one go (in order): Use `submit-simc-g4sbs-digi-replay-jobs.sh` script.
 
 ## 3. Prerequisites:
 - Most up-to-date build of the following libraries:
@@ -33,7 +33,7 @@ Here is a list of processess that can be executed using the scripts present in t
 - `python3` 
  
 ## 4. Quick start:
-....
+At the top of each `submit-` script there is a brief description of what the script does and a co 
 
 ## 5. Useful SWIF2 commands:
 An exhaustive list of all the SWIF2 commands can be found [here](https://scicomp.jlab.org/cli/swif.html). Here is a small list of very useful and common SWIF2 commands:
