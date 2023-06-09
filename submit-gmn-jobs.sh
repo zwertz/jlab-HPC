@@ -139,3 +139,10 @@ do
 	fi
     fi
 done
+
+# run the workflow and then print status
+if [[ $run_on_ifarm -ne 1 ]]; then
+    swif2 run $workflowname
+    echo -e "\n Getting workflow status.. [may take a few minutes!] \n"
+    swif2 status $workflowname
+fi
