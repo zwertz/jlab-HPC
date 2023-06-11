@@ -33,7 +33,20 @@ Here is a list of processess that can be executed using the scripts present in t
 - `python3` 
  
 ## 4. Quick start:
-At the top of each `submit-` script there is a brief description of what the script does and a co 
+1. Identify the `submit-` script relevant for the process you want to carry out. See section 2 ("Processes") for help.
+2. Open the script using an editor and carefully  go through the instructions written at the top.
+3. Search for the "ONLY User Specific part" and modify all the environment variables appropriately. Save the changes.
+4. On the terminal, type the name of the script and hit return.
+5. List of required arguments should get printed on screen.
+6. On the terminal, type the name of the script followed by all the required arguments in order and hit return.
+
+**Example:** Perform the following steps to submit g4sbs simulation, digitization, & reconstruction jobs to batch farm in one go (they will run in order):
+1. Open `submit-simu-digi-replay-jobs.sh` script using an editor.
+2. Search for "ONLY User Specific part" and modify the environment variables (SCRIPT_DIR, SIMC, G4SBS, LIBSBSDIG, etc.) appropriately.
+3. On the terminal type `submit-simu-digi-replay-jobs.sh` and hit return to see the list of required arguments. 
+4. Finally execute: <br>
+`submit-simu-digi-replay-jobs.sh example 4 100000 0 10 0` <br>
+\*\*(Assuming the g4sbs macro, named example.mac, is placed in $G4SBS/scripts directory and we want to run 10 jobs with 100K events per job for GMn SBS4 configuration.)
 
 ## 5. Useful SWIF2 commands:
 An exhaustive list of all the SWIF2 commands can be found [here](https://scicomp.jlab.org/cli/swif.html). Here is a small list of very useful and common SWIF2 commands:
