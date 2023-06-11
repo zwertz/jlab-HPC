@@ -7,16 +7,16 @@
 # ------------------------------------------------------------------------- #
 
 # Setting necessary environments (ONLY User Specific part)
-export SCRIPT_DIR=/w/halla-scshelf2102/sbs/pdbforce/jlab-HPC
-export G4SBS=/w/halla-scshelf2102/sbs/pdbforce/G4SBS/install
+export SCRIPT_DIR=/Path/to/jlab-HPC/repository
+export G4SBS=/Path/to/G4SBS/install/directory
 
 preinit=$1      # G4SBS preinit macro w/o file extention (Must be located at $G4SBS/scripts)
 nevents=$2      # No. of events to generate per job
 fjobid=$3       # first job id
 njobs=$4        # total no. of jobs to submit 
 run_on_ifarm=$5 # 1=>Yes (If true, runs all jobs on ifarm)
-workflowname='gmng4_sbs14_70p'
-outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output/test'
+workflowname=
+outdirpath=
 
 # Validating the number of arguments provided
 if [[ "$#" -ne 5 ]]; then

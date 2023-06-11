@@ -7,8 +7,8 @@
 # ------------------------------------------------------------------------- #
 
 # Setting necessary environments (ONLY User Specific part)
-export SCRIPT_DIR=/w/halla-scshelf2102/sbs/pdbforce/jlab-HPC
-export LIBSBSDIG=/work/halla/sbs/pdbforce/LIBSBSDIG/install
+export SCRIPT_DIR=/Path/to/jlab-HPC/repository
+export LIBSBSDIG=/Path/to/libsbsdig/install/directory
 
 # Filebase of the g4sbs output file (w/o file extention)
 g4sbsfilebase=$1
@@ -18,7 +18,7 @@ fjobid=$3       # first job id
 njobs=$4        # total no. of jobs to submit 
 run_on_ifarm=$5 # 1=>Yes (If true, runs all jobs on ifarm)
 # workflow name
-workflowname='test'
+workflowname=
 
 # Validating the number of arguments provided
 if [[ "$#" -ne 5 ]]; then

@@ -7,10 +7,10 @@
 # ------------------------------------------------------------------------- #
 
 # Setting necessary environments (ONLY User Specific part)
-export SCRIPT_DIR=/w/halla-scshelf2102/sbs/pdbforce/jlab-HPC
-export ANALYZER=/work/halla/sbs/pdbforce/ANALYZER/install
-export SBSOFFLINE=/work/halla/sbs/pdbforce/SBSOFFLINE/install
-export SBS_REPLAY=/work/halla/sbs/pdbforce/SBS-replay
+export SCRIPT_DIR=/Path/to/jlab-HPC/repository
+export ANALYZER=/Path/to/analyzer/install/directory
+export SBSOFFLINE=/Path/to/SBS-offline/install/directory
+export SBS_REPLAY=/Path/to/SBS-replay/repository
 
 inputfile=$1  # Digitized ROOT filebase w/o extention
 indirpath=$2  # Directory containing ditized ROOT files 
@@ -21,7 +21,7 @@ fjobid=$5     # first job id
 njobs=$6      # total no. of jobs to submit
 run_on_ifarm=$7
 # workflow name
-workflowname='test'
+workflowname=
 
 # Validating the number of arguments provided
 if [[ "$#" -ne 7 ]]; then

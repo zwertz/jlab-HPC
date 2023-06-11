@@ -11,12 +11,12 @@
 # ------------------------------------------------------------------------- #
 
 # Setting necessary environments (ONLY User Specific part)
-export SCRIPT_DIR=/w/halla-scshelf2102/sbs/pdbforce/jlab-HPC
-export G4SBS=/w/halla-scshelf2102/sbs/pdbforce/G4SBS/install
-export LIBSBSDIG=/work/halla/sbs/pdbforce/LIBSBSDIG/install
-export ANALYZER=/work/halla/sbs/pdbforce/ANALYZER/install
-export SBSOFFLINE=/work/halla/sbs/pdbforce/SBSOFFLINE/install
-export SBS_REPLAY=/work/halla/sbs/pdbforce/SBS-replay
+export SCRIPT_DIR=/Path/to/jlab-HPC/repository
+export G4SBS=/Path/to/G4SBS/install/directory
+export LIBSBSDIG=/Path/to/libsbsdig/install/directory
+export ANALYZER=/Path/to/analyzer/install/directory
+export SBSOFFLINE=/Path/to/SBS-offline/install/directory
+export SBS_REPLAY=/Path/to/SBS-replay/repository
 
 preinit=$1      # G4SBS preinit macro w/o file extention (Must be located at $G4SBS/scripts)
 sbsconfig=$2    # SBS configuration (Valid options: 4,7,11,14,8,9)
@@ -24,12 +24,12 @@ nevents=$3      # No. of events to generate per job
 fjobid=$4       # first job id
 njobs=$5        # total no. of jobs to submit 
 run_on_ifarm=$6 # 1=>Yes (If true, runs all jobs on ifarm)
-# Workflow name
-workflowname='fscan-sbs4'  # Not relevant if run_on_ifarm = 1
+# Workflow name (Not relevant if run_on_ifarm = 1)
+workflowname=
 # Specify a directory on volatile to store g4sbs, sbsdig, & replayed files.
 # Working on a single directory is convenient & safe for the above mentioned
 # three processes to run smoothly.
-outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output/fscan'
+outdirpath=
 
 # Validating the number of arguments provided
 if [[ "$#" -ne 6 ]]; then

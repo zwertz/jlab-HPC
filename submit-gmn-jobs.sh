@@ -11,20 +11,20 @@
 # ------------------------------------------------------------------------- #
 
 # Setting necessary environments (ONLY User Specific part)
-export SCRIPT_DIR=/w/halla-scshelf2102/sbs/pdbforce/jlab-HPC
-export ANALYZER=/work/halla/sbs/pdbforce/ANALYZER/install
-export SBSOFFLINE=/work/halla/sbs/pdbforce/SBSOFFLINE/install
-export SBS_REPLAY=/work/halla/sbs/pdbforce/SBS-replay
+export SCRIPT_DIR=/Path/to/jlab-HPC/repository
+export ANALYZER=/Path/to/analyzer/install/directory
+export SBSOFFLINE=/Path/to/SBS-offline/install/directory
+export SBS_REPLAY=/Path/to/SBS-replay/repository
 export DATA_DIR=/cache/mss/halla/sbs/raw
 
 runnum=$1       # run number 
 nevents=$2      # total no. of events to replay
 maxsegments=$3  # maximum no. of segments (or jobs) to analyze
 run_on_ifarm=$4 # 1=>Yes (If true, runs all jobs on ifarm)
-# Workflow name
-workflowname='sbs14-sbs70p-lh2'  # Not relevant if run_on_ifarm = 1
+# Workflow name (Not relevant if run_on_ifarm = 1)
+workflowname=
 # Specify a directory on volatile to store replayed ROOT files
-outdirpath='/volatile/halla/sbs/pdbforce/gmn-replays/test'
+outdirpath=
 
 # Validating the number of arguments provided
 if [[ "$#" -ne 4 ]]; then

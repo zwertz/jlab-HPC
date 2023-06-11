@@ -31,13 +31,13 @@
 # ----------------------------------------------------------------------------------- #
 
 # Setting necessary environments (ONLY User Specific part)
-export SCRIPT_DIR=/w/halla-scshelf2102/sbs/pdbforce/jlab-HPC
-export SIMC=/w/halla-scshelf2102/sbs/pdbforce/SIMC/simc_gfortran
-export G4SBS=/w/halla-scshelf2102/sbs/pdbforce/G4SBS/install
-export LIBSBSDIG=/work/halla/sbs/pdbforce/LIBSBSDIG/install
-export ANALYZER=/work/halla/sbs/pdbforce/ANALYZER/install
-export SBSOFFLINE=/work/halla/sbs/pdbforce/SBSOFFLINE/install
-export SBS_REPLAY=/work/halla/sbs/pdbforce/SBS-replay
+export SCRIPT_DIR=/Path/to/jlab-HPC/repository
+export SIMC=/Path/to/simc_gfortran/repository
+export G4SBS=/Path/to/G4SBS/install/directory
+export LIBSBSDIG=/Path/to/libsbsdig/install/directory
+export ANALYZER=/Path/to/analyzer/install/directory
+export SBSOFFLINE=/Path/to/SBS-offline/install/directory
+export SBS_REPLAY=/Path/to/SBS-replay/repository
 
 # ------ Variables needed to be set properly for successful execution ------ #
 # -------------------------------------------------------------------------- #
@@ -52,11 +52,11 @@ njobs=$4        # total no. of jobs to submit
 run_on_ifarm=$5 # 1=>Yes (If true, runs all jobs on ifarm)
 # ----/\---- Above variables are taken as arguments to this script ---/\---- # 
 # Workflow name
-workflowname='ssdr-sbs4-sbs50p-qe-65sf'
+workflowname=
 # Specify a directory on volatile to store simc, g4sbs, sbsdig, & replayed outfiles.
 # Working on a single directory is convenient & safe for the above mentioned
 # four processes to run coherently without any error.
-outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output/fscan/sbspfmap_sbs4_sbs50p_simc_deeN_65sf'
+outdirpath=
 # -------------------------------------------------------------------------- #
 
 # Sanity check 1: Validating the number of arguments provided
