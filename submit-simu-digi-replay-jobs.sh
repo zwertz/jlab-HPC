@@ -102,7 +102,7 @@ do
     aggsumscript=$SCRIPT_DIR'/agg-g4sbs-job-summary.sh'
 
     if [[ ($i == 0) || (! -f $g4sbssumtable) ]]; then
-	$aggsumscript $aggsuminfile '1' $aggsumoutfile
+	$aggsumscript $aggsuminfile '1' $aggsumoutfile $SCRIPT_DIR
     fi
     if [[ $run_on_ifarm -ne 1 ]]; then
 	swif2 add-job -workflow $workflowname -antecedent $g4sbsjobname -partition production -name $aggsumjobname -cores 1 -disk 1GB -ram 150MB $aggsumscript $aggsuminfile '0' $aggsumoutfile $SCRIPT_DIR
