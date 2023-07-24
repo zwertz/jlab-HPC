@@ -15,8 +15,9 @@
 # list of arguments
 txtfile=$1 # .txt file containing input file paths
 infilename=$2
-run_on_ifarm=$3
-libsbsdigenv=$4
+gemconfig=$3 # valid options: 8,10,12 (Represents # GEM modules)
+run_on_ifarm=$4
+libsbsdigenv=$5
 
 # paths to necessary libraries (ONLY User specific part) ---- #
 export LIBSBSDIG=$libsbsdigenv
@@ -47,12 +48,22 @@ ldd $LIBSBSDIG/bin/sbsdig |& grep not
 # Setup sbsdig specific environments
 source $LIBSBSDIG/bin/sbsdigenv.sh
 
-# run the sbsdig command
-dbfile=$LIBSBSDIG/db/db_gmn_conf.dat
+# Choosing the right DB file depending on GEM config
+if [[ $gemconfig -eq 8 ]]; then
+    dbfile=$LIBSBSDIG/db/db_gmn_conf_8gemmodules.dat
+elif [[ $gemconfig -eq 10 ]]; then
+    dbfile=$LIBSBSDIG/db/db_gmn_conf_10gemmodules.dat
+elif [[ $gemconfig -eq 12 ]]; then
+    dbfile=$LIBSBSDIG/db/db_gmn_conf_12gemmodules.dat
+else
+    echo -e "[run-sbsdig.sh] ERROR!! Enter valid GEM config!"
+    exit;
+fi
 
 # creating input text file
 echo $infilename >>$txtfile
 
+# run the sbsdig command
 sbsdig $dbfile $txtfile
 
 # cleaning up the work directory

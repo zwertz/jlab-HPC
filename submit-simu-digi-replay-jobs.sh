@@ -79,6 +79,19 @@ else
     echo -e "\nRunning all jobs on ifarm!\n"
 fi
 
+# Choosing the right GEM config for digitization
+gemconfig=0
+if [[ ($sbsconfig -eq 4) || ($sbsconfig -eq 7) ]]; then
+    gemconfig=12
+elif [[ $sbsconfig -eq 11 ]]; then
+    gemconfig=10
+elif [[ ($sbsconfig -eq 14) || ($sbsconfig -eq 8) || ($sbsconfig -eq 9) ]]; then
+    gemconfig=8
+else
+    echo -e "Enter valid SBS config! Valid options: 4,7,11,14,8,9"
+    exit;
+fi
+
 for ((i=$fjobid; i<$((fjobid+njobs)); i++))
 do
     # lets submit g4sbs jobs first
@@ -118,9 +131,9 @@ do
     sbsdigscript=$SCRIPT_DIR'/run-sbsdig.sh'
     
     if [[ $run_on_ifarm -ne 1 ]]; then
-	swif2 add-job -workflow $workflowname -antecedent $g4sbsjobname -partition production -name $sbsdigjobname -cores 1 -disk 5GB -ram 1500MB $sbsdigscript $txtfile $sbsdiginfile $run_on_ifarm $LIBSBSDIG
+	swif2 add-job -workflow $workflowname -antecedent $g4sbsjobname -partition production -name $sbsdigjobname -cores 1 -disk 5GB -ram 1500MB $sbsdigscript $txtfile $sbsdiginfile $gemconfig $run_on_ifarm $LIBSBSDIG
     else
-	$sbsdigscript $txtfile $sbsdiginfile $run_on_ifarm $LIBSBSDIG
+	$sbsdigscript $txtfile $sbsdiginfile $gemconfig $run_on_ifarm $LIBSBSDIG
     fi
 
     # finally, lets replay the digitized data
