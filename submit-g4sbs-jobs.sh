@@ -4,11 +4,17 @@
 # This script runs g4sbs jobs on ifarm or submits them to batch farm.       #
 # ---------                                                                 #
 # P. Datta <pdbforce@jlab.org> CREATED 11-09-2022                           #
+# ---------                                                                 #
+# ** Do not tamper with this sticker! Log any updates to the script above.  #
 # ------------------------------------------------------------------------- #
 
-# Setting necessary environments (ONLY User Specific part)
-export SCRIPT_DIR=/Path/to/jlab-HPC/repository
-export G4SBS=/Path/to/G4SBS/install/directory
+# Setting necessary environments via environment.sh
+source environment.sh
+if [[ ! -d $SCRIPT_DIR ]]; then
+    echo -e '\nERROR!! Please set "SCRIPT_DIR" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $G4SBS ]]; then
+    echo -e '\nERROR!! Please set "G4SBS" path properly in environment.sh script!\n'; exit;
+fi
 
 preinit=$1      # G4SBS preinit macro w/o file extention (Must be located at $G4SBS/scripts)
 nevents=$2      # No. of events to generate per job

@@ -6,12 +6,10 @@
 # P. Datta <pdbforce@jlab.org> CREATED 11-09-2022                           #
 # ------------------------------------------------------------------------- #
 
-# Setting necessary environments (ONLY User Specific part)
-export SCRIPT_DIR=/Path/to/jlab-HPC/repository
-export ANALYZER=/Path/to/analyzer/install/directory
-export SBSOFFLINE=/Path/to/SBS-offline/install/directory
-export SBS_REPLAY=/Path/to/SBS-replay/repository
+# Setting necessary environments via environment.sh
+source environment.sh
 
+# List of arguments
 inputfile=$1  # Digitized ROOT filebase w/o extention
 indirpath=$2  # Directory containing ditized ROOT files 
 outdirpath=$indirpath # 
@@ -22,6 +20,17 @@ njobs=$6      # total no. of jobs to submit
 run_on_ifarm=$7
 # workflow name
 workflowname=
+
+# Checking the environments
+if [[ ! -d $SCRIPT_DIR ]]; then
+    echo -e '\nERROR!! Please set "SCRIPT_DIR" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $ANALYZER ]]; then
+    echo -e '\nERROR!! Please set "ANALYZER" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $SBSOFFLINE ]]; then
+    echo -e '\nERROR!! Please set "SBSOFFLINE" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $SBS_REPLAY ]]; then
+    echo -e '\nERROR!! Please set "SBS_REPLAY" path properly in environment.sh script!\n'; exit;
+fi
 
 # Validating the number of arguments provided
 if [[ "$#" -ne 7 ]]; then

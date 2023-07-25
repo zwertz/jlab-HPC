@@ -30,14 +30,8 @@
 #    run-digi-replay.sh | All these scripts must be present in the $SCRIPT_DIR        #
 # ----------------------------------------------------------------------------------- #
 
-# Setting necessary environments (ONLY User Specific part)
-export SCRIPT_DIR=/Path/to/jlab-HPC/repository
-export SIMC=/Path/to/simc_gfortran/repository
-export G4SBS=/Path/to/G4SBS/install/directory
-export LIBSBSDIG=/Path/to/libsbsdig/install/directory
-export ANALYZER=/Path/to/analyzer/install/directory
-export SBSOFFLINE=/Path/to/SBS-offline/install/directory
-export SBS_REPLAY=/Path/to/SBS-replay/repository
+# Setting necessary environments via environment.sh
+source environment.sh
 
 # ------ Variables needed to be set properly for successful execution ------ #
 # -------------------------------------------------------------------------- #
@@ -58,6 +52,23 @@ workflowname=
 # four processes to run coherently without any error.
 outdirpath=
 # -------------------------------------------------------------------------- #
+
+# Sanity check 0: Checking the environments
+if [[ ! -d $SCRIPT_DIR ]]; then
+    echo -e '\nERROR!! Please set "SCRIPT_DIR" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $SIMC ]]; then
+    echo -e '\nERROR!! Please set "SIMC" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $G4SBS ]]; then
+    echo -e '\nERROR!! Please set "G4SBS" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $LIBSBSDIG ]]; then
+    echo -e '\nERROR!! Please set "LIBSBSDIG" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $ANALYZER ]]; then
+    echo -e '\nERROR!! Please set "ANALYZER" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $SBSOFFLINE ]]; then
+    echo -e '\nERROR!! Please set "SBSOFFLINE" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $SBS_REPLAY ]]; then
+    echo -e '\nERROR!! Please set "SBS_REPLAY" path properly in environment.sh script!\n'; exit;
+fi
 
 # Sanity check 1: Validating the number of arguments provided
 if [[ "$#" -ne 5 ]]; then

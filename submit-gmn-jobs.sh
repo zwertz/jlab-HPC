@@ -10,13 +10,11 @@
 # ** Do not tamper with this sticker! Log any updates to the script above.  #
 # ------------------------------------------------------------------------- #
 
-# Setting necessary environments (ONLY User Specific part)
-export SCRIPT_DIR=/Path/to/jlab-HPC/repository
-export ANALYZER=/Path/to/analyzer/install/directory
-export SBSOFFLINE=/Path/to/SBS-offline/install/directory
-export SBS_REPLAY=/Path/to/SBS-replay/repository
+# Setting necessary environments via environment.sh
+source environment.sh
 export DATA_DIR=/cache/mss/halla/sbs/raw
 
+# List of arguments
 runnum=$1       # run number 
 nevents=$2      # total no. of events to replay
 maxsegments=$3  # maximum no. of segments (or jobs) to analyze
@@ -25,6 +23,17 @@ run_on_ifarm=$4 # 1=>Yes (If true, runs all jobs on ifarm)
 workflowname=
 # Specify a directory on volatile to store replayed ROOT files
 outdirpath=
+
+# Checking the environments
+if [[ ! -d $SCRIPT_DIR ]]; then
+    echo -e '\nERROR!! Please set "SCRIPT_DIR" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $ANALYZER ]]; then
+    echo -e '\nERROR!! Please set "ANALYZER" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $SBSOFFLINE ]]; then
+    echo -e '\nERROR!! Please set "SBSOFFLINE" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $SBS_REPLAY ]]; then
+    echo -e '\nERROR!! Please set "SBS_REPLAY" path properly in environment.sh script!\n'; exit;
+fi
 
 # Validating the number of arguments provided
 if [[ "$#" -ne 4 ]]; then

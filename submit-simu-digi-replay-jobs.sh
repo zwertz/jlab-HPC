@@ -10,14 +10,10 @@
 # ** Do not tamper with this sticker! Log any updates to the script above.  #
 # ------------------------------------------------------------------------- #
 
-# Setting necessary environments (ONLY User Specific part)
-export SCRIPT_DIR=/Path/to/jlab-HPC/repository
-export G4SBS=/Path/to/G4SBS/install/directory
-export LIBSBSDIG=/Path/to/libsbsdig/install/directory
-export ANALYZER=/Path/to/analyzer/install/directory
-export SBSOFFLINE=/Path/to/SBS-offline/install/directory
-export SBS_REPLAY=/Path/to/SBS-replay/repository
+# Setting necessary environments via environment.sh
+source environment.sh
 
+# List of arguments
 preinit=$1      # G4SBS preinit macro w/o file extention (Must be located at $G4SBS/scripts)
 sbsconfig=$2    # SBS configuration (Valid options: 4,7,11,14,8,9)
 nevents=$3      # No. of events to generate per job
@@ -30,6 +26,21 @@ workflowname=
 # Working on a single directory is convenient & safe for the above mentioned
 # three processes to run smoothly.
 outdirpath=
+
+# Checking the environments
+if [[ ! -d $SCRIPT_DIR ]]; then
+    echo -e '\nERROR!! Please set "SCRIPT_DIR" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $G4SBS ]]; then
+    echo -e '\nERROR!! Please set "G4SBS" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $LIBSBSDIG ]]; then
+    echo -e '\nERROR!! Please set "LIBSBSDIG" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $ANALYZER ]]; then
+    echo -e '\nERROR!! Please set "ANALYZER" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $SBSOFFLINE ]]; then
+    echo -e '\nERROR!! Please set "SBSOFFLINE" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $SBS_REPLAY ]]; then
+    echo -e '\nERROR!! Please set "SBS_REPLAY" path properly in environment.sh script!\n'; exit;
+fi
 
 # Validating the number of arguments provided
 if [[ "$#" -ne 6 ]]; then

@@ -6,19 +6,17 @@
 # list of runs to the ifarm or the swif2 system. It is created based on     #
 # Provakar Datta's script                                                   #
 # ---------                                                                 #
-# Sean Jeffas, sj9ry@virginia.edu CREATED 07-24-2022                        #
+# Sean Jeffas, sj9ry@virginia.edu CREATED 07-24-2023                        #
 # ---------                                                                 #
 # ** Do not tamper with this sticker! Log any updates to the script above.  #
 # ------------------------------------------------------------------------- #
 
-# Setting necessary environments (ONLY User Specific part)
-export SCRIPT_DIR=/Path/to/jlab-HPC/repository
-export ANALYZER=/Path/to/analyzer/install/directory
-export SBSOFFLINE=/Path/to/SBS-offline/install/directory
-export SBS_REPLAY=/Path/to/SBS-replay/repository
+# Setting necessary environments via environment.sh
+source environment.sh
 export GMN_DATA_PATH=halla/sbs/raw
 export GEN_DATA_PATH=halla/sbs/GEnII/raw
 
+# List of arguments
 runs=$1       # run number 
 prefix=-1     # We will initialize the rest in a second
 run_on_ifarm=-1
@@ -32,6 +30,17 @@ workflowname=
 outdirpath=
 
 type=0  # 1 = multi run from txt file, 0 = single run
+
+# Checking the environments
+if [[ ! -d $SCRIPT_DIR ]]; then
+    echo -e '\nERROR!! Please set "SCRIPT_DIR" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $ANALYZER ]]; then
+    echo -e '\nERROR!! Please set "ANALYZER" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $SBSOFFLINE ]]; then
+    echo -e '\nERROR!! Please set "SBSOFFLINE" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $SBS_REPLAY ]]; then
+    echo -e '\nERROR!! Please set "SBS_REPLAY" path properly in environment.sh script!\n'; exit;
+fi
 
 #Description of how to run if the user puts in a wrong input
 if [ "$#" -ne 6 ] && [ "$#" -ne 3 ] && [ "$#" -ne 7 ]; then

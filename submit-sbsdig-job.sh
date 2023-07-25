@@ -4,11 +4,12 @@
 # This script runs sbsdig jobs on ifarm or submits them to batch farm.      #
 # ---------                                                                 #
 # P. Datta <pdbforce@jlab.org> CREATED 11-09-2022                           #
+# ---------                                                                 #
+# ** Do not tamper with this sticker! Log any updates to the script above.  #
 # ------------------------------------------------------------------------- #
 
-# Setting necessary environments (ONLY User Specific part)
-export SCRIPT_DIR=/Path/to/jlab-HPC/repository
-export LIBSBSDIG=/Path/to/libsbsdig/install/directory
+# Setting necessary environments via environment.sh
+source environment.sh
 
 # Filebase of the g4sbs output file (w/o file extention)
 g4sbsfilebase=$1
@@ -20,6 +21,13 @@ njobs=$5        # total no. of jobs to submit
 run_on_ifarm=$6 # 1=>Yes (If true, runs all jobs on ifarm)
 # workflow name
 workflowname=
+
+# Checking the environments
+if [[ ! -d $SCRIPT_DIR ]]; then
+    echo -e '\nERROR!! Please set "SCRIPT_DIR" path properly in environment.sh script!\n'; exit;
+elif [[ ! -d $LIBSBSDIG ]]; then
+    echo -e '\nERROR!! Please set "LIBSBSDIG" path properly in environment.sh script!\n'; exit;
+fi
 
 # Validating the number of arguments provided
 if [[ "$#" -ne 6 ]]; then
