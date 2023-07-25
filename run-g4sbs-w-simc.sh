@@ -44,7 +44,7 @@ module use /apps/modulefiles
 fi 
 
 # setup farm environments
-source /site/12gev_phys/softenv.sh 2.4
+source /site/12gev_phys/softenv.sh 2.5
 module load gcc/9.2.0 
 ldd $G4SBS/bin/g4sbs |& grep not
 
