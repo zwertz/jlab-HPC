@@ -1,9 +1,10 @@
 #!/bin/bash
 
 # ------------------------------------------------------------------------- #
-# This script submits real data replay jobs for GMn/nTPE data to batch farm.# 
-# There is a flag to force all the jobs to run on ifarm instead. It was     #
-# created based on Andrew Puckett's script.                                 #
+# This script submits real data replay jobs for SBS experiments. It takes   #
+# several arguments as inputs and can analyzer either a single run or a     #
+# list of runs to the ifarm or the swif2 system. It is created based on     #
+# Provakar Datta's script                                                   #
 # ---------                                                                 #
 # Sean Jeffas, sj9ry@virginia.edu CREATED 07-24-2022                        #
 # ---------                                                                 #
@@ -11,10 +12,10 @@
 # ------------------------------------------------------------------------- #
 
 # Setting necessary environments (ONLY User Specific part)
-export SCRIPT_DIR=/w/halla-scshelf2102/sbs/jeffas/jlab-HPC
-export ANALYZER=/w/halla-scshelf2102/sbs/jeffas/ANALYZER/install
-export SBSOFFLINE=/w/halla-scshelf2102/sbs/jeffas/SBS_OFFLINE/install
-export SBS_REPLAY=/w/halla-scshelf2102/sbs/jeffas/SBS_OFFLINE/SBS-replay
+export SCRIPT_DIR=/Path/to/jlab-HPC/repository
+export ANALYZER=/Path/to/analyzer/install/directory
+export SBSOFFLINE=/Path/to/SBS-offline/install/directory
+export SBS_REPLAY=/Path/to/SBS-replay/repository
 export GMN_DATA_PATH=halla/sbs/raw
 export GEN_DATA_PATH=halla/sbs/GEnII/raw
 
@@ -26,9 +27,9 @@ maxsegments=-1
 segments_per_job=-1
 use_sbs_gems=             # 0 = no sbs gems, 1 = use sbs gems
 # Workflow name (Not relevant if run_on_ifarm = 1)
-workflowname=jeffas_test
+workflowname=
 # Specify a directory on volatile to store replayed ROOT files
-outdirpath=/lustre19/expphy/volatile/halla/sbs/jeffas/GEN_root/Rootfiles
+outdirpath=
 
 type=0  # 1 = multi run from txt file, 0 = single run
 
