@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # ------------------------------------------------------------------------- #
-# This script submits real data replay jobs for GMn/nTPE data to batch farm.# 
-# There is a flag to force all the jobs to run on ifarm instead. It was     #
-# created based on Andrew Puckett's script.                                 #
+# This script submits a single job for real data analysis. It should be     #
+# called by sbs-replay-main.sh.                                             #
 # ---------                                                                 #
 # P. Datta <pdbforce@jlab.org> CREATED 11-09-2022                           #
+# Sean Jeffas <sj9ry@virginia.edu> Updated 07-25-2023                       #
 # ---------                                                                 #
 # ** Do not tamper with this sticker! Log any updates to the script above.  #
 # ------------------------------------------------------------------------- #
