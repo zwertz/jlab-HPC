@@ -9,7 +9,7 @@
 6. Contact
 
 ## 1. Design: 
-There are mainly two different kind of scripts present in this repository: 
+There are mainly three different kinds of scripts present in this repository: 
 1. **Run scripts** (name begins with `run-` keyword): Each of these scripts execute individual processes such as g4sbs simulation, digitization, etc. E.g. `run-g4sbs-simu.sh` executes g4sbs simulation jobs. Users shouldn't have to edit or modify these scripts.
 2. **Submit scripts** (name begins with `submit-` keyword): These are essentially wrapper scripts. Every run script has one (or more) corresponding submit script(s). Submit scripts take a few command line arguments and run the corresponding run script(s) accordingly. E.g. `submit-g4sbs-jobs.sh` script executes `run-g4sbs-simu.sh` script, which runs g4sbs simulations, according to the command line arguments (e.g. g4sbs macro name, no. of jobs, etc.) given by the user. They also sets the proper environment variables required by the run scripts. The environment variables are all listed at the beginning of each submit script. Since, environment variables are user specific, a first time user needs to set them properly at the beginning.
 3. **Organization scripts**: These scripts are used to organize a replay and make it more streamlined for the user. They take a few arguments and can tell which type of SBS experiment to use and can run single replays or multi replays. This script will subsequently call the proper submit script (above). Right now this is only implemented for real data replays in the script sbs-replay-main.sh. In the future it may be best to make a similar for the simulated data as well.
