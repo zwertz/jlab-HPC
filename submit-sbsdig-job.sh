@@ -14,16 +14,17 @@ export LIBSBSDIG=/Path/to/libsbsdig/install/directory
 g4sbsfilebase=$1
 # Directory at which g4sbs output files are existing which we want to digitize
 g4sbsfiledir=$2
-fjobid=$3       # first job id
-njobs=$4        # total no. of jobs to submit 
-run_on_ifarm=$5 # 1=>Yes (If true, runs all jobs on ifarm)
+gemconfig=$3    # GEM config (Valid options: 8,10,12)
+fjobid=$4       # first job id
+njobs=$5        # total no. of jobs to submit 
+run_on_ifarm=$6 # 1=>Yes (If true, runs all jobs on ifarm)
 # workflow name
 workflowname=
 
 # Validating the number of arguments provided
-if [[ "$#" -ne 5 ]]; then
+if [[ "$#" -ne 6 ]]; then
     echo -e "\n--!--\n Illegal number of arguments!!"
-    echo -e " This script expects 5 arguments: <g4sbsfilebase> <g4sbsfiledir> <fjobid> <njobs> <run_on_ifarm>\n"
+    echo -e " This script expects 6 arguments: <g4sbsfilebase> <g4sbsfiledir> <gemconfig> <fjobid> <njobs> <run_on_ifarm>\n"
     exit;
 else 
     if [[ $run_on_ifarm -ne 1 ]]; then
@@ -62,9 +63,9 @@ do
     sbsdigscript=$SCRIPT_DIR'/run-sbsdig.sh'
 
     if [[ $run_on_ifarm -ne 1 ]]; then
-	swif2 add-job -workflow $workflowname -partition production -name $sbsdigjobname -cores 1 -disk 5GB -ram 1500MB $sbsdigscript $txtfile $sbsdiginfile $run_on_ifarm $LIBSBSDIG
+	swif2 add-job -workflow $workflowname -partition production -name $sbsdigjobname -cores 1 -disk 5GB -ram 1500MB $sbsdigscript $txtfile $sbsdiginfile $gemconfig $run_on_ifarm $LIBSBSDIG
     else
-	$sbsdigscript $txtfile $sbsdiginfile $run_on_ifarm $LIBSBSDIG
+	$sbsdigscript $txtfile $sbsdiginfile $gemconfig $run_on_ifarm $LIBSBSDIG
     fi
 done
 

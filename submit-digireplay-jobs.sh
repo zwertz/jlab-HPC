@@ -48,6 +48,13 @@ else
     fi
 fi
 
+# Creating the workflow
+if [[ $run_on_ifarm -ne 1 ]]; then
+    swif2 create $workflowname
+else
+    echo -e "\nRunning all jobs on ifarm!\n"
+fi
+
 # looping over jobs
 for ((i=$fjobid; i<$((fjobid+njobs)); i++))
 do
