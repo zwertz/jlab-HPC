@@ -9,10 +9,11 @@
 6. Contact
 
 ## 1. Design: 
-There are mainly three different kinds of scripts present in this repository: 
-1. **Run scripts** (name begins with `run-` keyword): Each of these scripts execute individual processes such as g4sbs simulation, digitization, etc. E.g. `run-g4sbs-simu.sh` executes g4sbs simulation jobs. Users shouldn't have to edit or modify these scripts.
-2. **Submit scripts** (name begins with `submit-` keyword): These are essentially wrapper scripts. Every run script has one (or more) corresponding submit script(s). Submit scripts take a few command line arguments and run the corresponding run script(s) accordingly. E.g. `submit-g4sbs-jobs.sh` script executes `run-g4sbs-simu.sh` script, which runs g4sbs simulations, according to the command line arguments (e.g. g4sbs macro name, no. of jobs, etc.) given by the user. They also sets the proper environment variables required by the run scripts. The environment variables are all listed at the beginning of each submit script. Since, environment variables are user specific, a first time user needs to set them properly at the beginning.
-3. **Organization scripts**: These scripts are used to organize a replay and make it more streamlined for the user. They take a few arguments and can tell which type of SBS experiment to use and can run single replays or multi replays. This script will subsequently call the proper submit script (above). Right now this is only implemented for real data replays in the script sbs-replay-main.sh. In the future it may be best to make a similar for the simulated data as well.
+There are mainly four different kind of scripts present in this repository: 
+1. **setenv.sh**: This script sets all the necessary environment variables. Since, environment variables are user specific, a first time user needs to set them properly at the beginning. <span style="color:red">Very important!</span>
+2. **Run scripts** (name begins with `run-` keyword): Each of these scripts execute individual processes such as g4sbs simulation, digitization, etc. E.g. `run-g4sbs-simu.sh` executes g4sbs simulation jobs. Users shouldn't have to edit or modify these scripts.
+3. **Submit scripts** (name begins with `submit-` keyword): These are essentially wrapper scripts. Every run script has one (or more) corresponding submit script(s). Submit scripts take a few command line arguments and run the corresponding run script(s) accordingly. E.g. `submit-g4sbs-jobs.sh` script executes `run-g4sbs-simu.sh` script, which runs g4sbs simulations, according to the command line arguments (e.g. g4sbs macro name, no. of jobs, etc.) given by the user.
+4. **Organization scripts**: These scripts are used to organize a replay and make it more streamlined for the user. They take a few arguments and can tell which type of SBS experiment to use and can run single replays or multi replays. This script will subsequently call the proper submit script (above). Right now this is only implemented for real data replays in the script sbs-replay-main.sh. In the future it may be best to make a similar for the simulated data as well.
 
 ## 2. Processes:
 Here is a list of processess that can be executed using the scripts present in this repo:
@@ -34,17 +35,17 @@ Here is a list of processess that can be executed using the scripts present in t
 - `python3` 
  
 ## 4. Quick start:
-1. Identify the `submit-` script relevant for the process you want to carry out. See section 2 ("Processes") for help.
-2. Open the script using an editor and carefully  go through the instructions written at the top.
-3. Search for the "ONLY User Specific part" and modify all the environment variables appropriately. Save the changes.
+1. Modify `setenv.sh` appropriately.
+2. Identify the `submit-` script relevant for the process you want to carry out. See section 2 ("Processes") for help.
+3. Open the script using an editor and carefully  go through the instructions written at the top.
 4. On the terminal, type the name of the script and hit return.
 5. List of required arguments should get printed on screen.
 6. On the terminal, type the name of the script followed by all the required arguments in order and hit return.
 
 **Example:** Perform the following steps to submit g4sbs simulation, digitization, & reconstruction jobs to batch farm in one go (they will run in order):
-1. Open `submit-simu-digi-replay-jobs.sh` script using an editor.
-2. Search for "ONLY User Specific part" and modify the environment variables (SCRIPT_DIR, SIMC, G4SBS, LIBSBSDIG, etc.) appropriately.
-3. On the terminal type `submit-simu-digi-replay-jobs.sh` and hit return to see the list of required arguments. 
+1. Open `setenv.sh` script using an editor.
+2. Modify the environment variables (SCRIPT_DIR, SIMC, G4SBS, LIBSBSDIG, etc.) appropriately. 
+3. On the terminal type `submit-simu-digi-replay-jobs.sh` and hit return to see the list of required arguments.
 4. Finally execute: <br>
 `submit-simu-digi-replay-jobs.sh example 4 100000 0 10 0` <br>
 \*\*(Assuming the g4sbs macro, named example.mac, is placed in $G4SBS/scripts directory and we want to run 10 jobs with 100K events per job for GMn SBS4 configuration.)
