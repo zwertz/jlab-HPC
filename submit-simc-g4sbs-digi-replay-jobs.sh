@@ -30,8 +30,8 @@
 #    run-digi-replay.sh | All these scripts must be present in the $SCRIPT_DIR        #
 # ----------------------------------------------------------------------------------- #
 
-# Setting necessary environments via environment.sh
-source environment.sh
+# Setting necessary environments via setenv.sh
+source setenv.sh
 
 # ------ Variables needed to be set properly for successful execution ------ #
 # -------------------------------------------------------------------------- #
@@ -55,19 +55,19 @@ outdirpath=
 
 # Sanity check 0: Checking the environments
 if [[ ! -d $SCRIPT_DIR ]]; then
-    echo -e '\nERROR!! Please set "SCRIPT_DIR" path properly in environment.sh script!\n'; exit;
+    echo -e '\nERROR!! Please set "SCRIPT_DIR" path properly in setenv.sh script!\n'; exit;
 elif [[ ! -d $SIMC ]]; then
-    echo -e '\nERROR!! Please set "SIMC" path properly in environment.sh script!\n'; exit;
+    echo -e '\nERROR!! Please set "SIMC" path properly in setenv.sh script!\n'; exit;
 elif [[ ! -d $G4SBS ]]; then
-    echo -e '\nERROR!! Please set "G4SBS" path properly in environment.sh script!\n'; exit;
+    echo -e '\nERROR!! Please set "G4SBS" path properly in setenv.sh script!\n'; exit;
 elif [[ ! -d $LIBSBSDIG ]]; then
-    echo -e '\nERROR!! Please set "LIBSBSDIG" path properly in environment.sh script!\n'; exit;
+    echo -e '\nERROR!! Please set "LIBSBSDIG" path properly in setenv.sh script!\n'; exit;
 elif [[ ! -d $ANALYZER ]]; then
-    echo -e '\nERROR!! Please set "ANALYZER" path properly in environment.sh script!\n'; exit;
+    echo -e '\nERROR!! Please set "ANALYZER" path properly in setenv.sh script!\n'; exit;
 elif [[ ! -d $SBSOFFLINE ]]; then
-    echo -e '\nERROR!! Please set "SBSOFFLINE" path properly in environment.sh script!\n'; exit;
+    echo -e '\nERROR!! Please set "SBSOFFLINE" path properly in setenv.sh script!\n'; exit;
 elif [[ ! -d $SBS_REPLAY ]]; then
-    echo -e '\nERROR!! Please set "SBS_REPLAY" path properly in environment.sh script!\n'; exit;
+    echo -e '\nERROR!! Please set "SBS_REPLAY" path properly in setenv.sh script!\n'; exit;
 fi
 
 # Sanity check 1: Validating the number of arguments provided

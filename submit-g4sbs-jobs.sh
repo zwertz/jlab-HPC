@@ -8,12 +8,12 @@
 # ** Do not tamper with this sticker! Log any updates to the script above.  #
 # ------------------------------------------------------------------------- #
 
-# Setting necessary environments via environment.sh
-source environment.sh
+# Setting necessary environments via setenv.sh
+source setenv.sh
 if [[ ! -d $SCRIPT_DIR ]]; then
-    echo -e '\nERROR!! Please set "SCRIPT_DIR" path properly in environment.sh script!\n'; exit;
+    echo -e '\nERROR!! Please set "SCRIPT_DIR" path properly in setenv.sh script!\n'; exit;
 elif [[ ! -d $G4SBS ]]; then
-    echo -e '\nERROR!! Please set "G4SBS" path properly in environment.sh script!\n'; exit;
+    echo -e '\nERROR!! Please set "G4SBS" path properly in setenv.sh script!\n'; exit;
 fi
 
 preinit=$1      # G4SBS preinit macro w/o file extention (Must be located at $G4SBS/scripts)

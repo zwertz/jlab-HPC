@@ -8,8 +8,8 @@
 # ** Do not tamper with this sticker! Log any updates to the script above.  #
 # ------------------------------------------------------------------------- #
 
-# Setting necessary environments via environment.sh
-source environment.sh
+# Setting necessary environments via setenv.sh
+source setenv.sh
 
 # Filebase of the g4sbs output file (w/o file extention)
 g4sbsfilebase=$1
@@ -24,9 +24,9 @@ workflowname=
 
 # Checking the environments
 if [[ ! -d $SCRIPT_DIR ]]; then
-    echo -e '\nERROR!! Please set "SCRIPT_DIR" path properly in environment.sh script!\n'; exit;
+    echo -e '\nERROR!! Please set "SCRIPT_DIR" path properly in setenv.sh script!\n'; exit;
 elif [[ ! -d $LIBSBSDIG ]]; then
-    echo -e '\nERROR!! Please set "LIBSBSDIG" path properly in environment.sh script!\n'; exit;
+    echo -e '\nERROR!! Please set "LIBSBSDIG" path properly in setenv.sh script!\n'; exit;
 fi
 
 # Validating the number of arguments provided
