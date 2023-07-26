@@ -27,3 +27,8 @@ export LIBSBSDIG=/Path/to/libsbsdig/install/directory
 export ANALYZER=/Path/to/analyzer/install/directory
 export SBSOFFLINE=/Path/to/SBS-offline/install/directory
 export SBS_REPLAY=/Path/to/SBS-replay/repository
+
+#Path to data directories
+#The path is written this way below becauses strings will need to be added to the left side of them, ie /cache/$GMN_DATA_PATH
+export GMN_DATA_PATH=halla/sbs/raw
+export GEN_DATA_PATH=halla/sbs/GEnII/raw

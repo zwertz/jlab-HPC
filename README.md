@@ -9,14 +9,15 @@
 6. Contact
 
 ## 1. Design: 
-There are mainly three different kind of scripts present in this repository: 
+There are mainly four different kind of scripts present in this repository: 
 1. **setenv.sh**: This script sets all the necessary environment variables. Since, environment variables are user specific, a first time user needs to set them properly at the beginning. <span style="color:red">Very important!</span>
 2. **Run scripts** (name begins with `run-` keyword): Each of these scripts execute individual processes such as g4sbs simulation, digitization, etc. E.g. `run-g4sbs-simu.sh` executes g4sbs simulation jobs. Users shouldn't have to edit or modify these scripts.
 3. **Submit scripts** (name begins with `submit-` keyword): These are essentially wrapper scripts. Every run script has one (or more) corresponding submit script(s). Submit scripts take a few command line arguments and run the corresponding run script(s) accordingly. E.g. `submit-g4sbs-jobs.sh` script executes `run-g4sbs-simu.sh` script, which runs g4sbs simulations, according to the command line arguments (e.g. g4sbs macro name, no. of jobs, etc.) given by the user.
+4. **Organization scripts**: These scripts are used to organize a replay and make it more streamlined for the user. They take a few arguments and can tell which type of SBS experiment to use and can run single replays or multi replays. This script will subsequently call the proper submit script (above). Right now this is only implemented for real data replays in the script sbs-replay-main.sh. In the future it may be best to make a similar for the simulated data as well.
 
 ## 2. Processes:
 Here is a list of processess that can be executed using the scripts present in this repo:
-1. raw data reconstruction (replay): Use `submit-gmn-jobs.sh` script.
+1. raw data reconstruction (replay): Use `sbs-replay-main.sh` script. This will work for all SBS experiments
 2. g4sbs simulation: Use `submit-g4sbs-jobs.sh` script.
 3. digitization of simulated data (sbsdig): Use `submit-sbsdig-job.sh` script.
 4. digitized data reconstruction: Use `submit-digireplay-jobs.sh` script.
