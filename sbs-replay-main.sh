@@ -13,8 +13,6 @@
 
 # Setting necessary environments via setenv.sh
 source setenv.sh
-export GMN_DATA_PATH=halla/sbs/raw
-export GEN_DATA_PATH=halla/sbs/GEnII/raw
 
 # List of arguments
 runs=$1       # run number 
@@ -25,7 +23,7 @@ maxsegments=-1
 segments_per_job=-1
 use_sbs_gems=             # 0 = no sbs gems, 1 = use sbs gems
 # Workflow name (Not relevant if run_on_ifarm = 1)
-workflowname=
+workflowname=test_workflow
 # Specify a directory on volatile to store replayed ROOT files
 outdirpath=
 
