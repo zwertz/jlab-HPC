@@ -64,7 +64,7 @@ do
     do 
 	eviofilename=$prefix'_'$runnum'.evio.'$j'.'$i
 	mssfilename='mss:/mss/'$DATA_PATH/$eviofilename
-	cachefile='/cache/mss/'$DATA_PATH/$eviofilenam
+	cachefile='/cache/mss/'$DATA_PATH/$eviofilename
 
 	testfilename='/mss/'$DATA_PATH/$eviofilename
 	
@@ -95,10 +95,11 @@ do
 	    #		echo 'Input string = '$inputstring
 	    
 	    scriptrun=$script' '$runnum' '$nevents' 0 '$prefix' '$firstsegment' '$nsegments' '$use_sbs_gems' '$DATA_PATH' '$outdirpath' '$run_on_ifarm' '$ANALYZER' '$SBSOFFLINE' '$SBS_REPLAY
-	    addjobcmd='add-job -workflow '$workflowname' -partition production -name '$jobname' -cores 1 -disk 25 GB -ram 3000 MB '$inputstring' '$scriptrun
+	    addjobcmd='add-job -workflow '$workflowname' -partition production -name '$jobname' -cores 1 -disk 25GB -ram 3000MB '$inputstring' '$scriptrun
 	    
 	    if [[ $run_on_ifarm -ne 1 ]]; then
 	        swif2 $addjobcmd
+		#echo $addjobcmd
 	    else
 		$scriptrun
 	    fi
@@ -115,10 +116,11 @@ do
 #	    echo 'Input string = "'$inputstring'"'
 
 	    scriptrun=$script' '$runnum' '$nevents' 0 '$prefix' '$firstsegment' '$nsegments' '$use_sbs_gems' '$DATA_PATH' '$outdirpath' '$run_on_ifarm' '$ANALYZER' '$SBSOFFLINE' '$SBS_REPLAY' '$usesbsgems
-	    addjobcmd='add-job -workflow '$workflowname' -partition production -name '$jobname' -cores 1 -disk 25 GB -ram 3000 MB '$inputstring' '$scriptrun
+	    addjobcmd='add-job -workflow '$workflowname' -partition production -name '$jobname' -cores 1 -disk 25GB -ram 3000MB '$inputstring' '$scriptrun
 
 	    if [[ $run_on_ifarm -ne 1 ]]; then
 	        swif2 $addjobcmd
+		#echo $addjobcmd
 	    else
 		$scriptrun
 	    fi

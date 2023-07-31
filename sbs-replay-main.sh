@@ -104,8 +104,8 @@ elif [ $type -eq 1 ]; then   #Otherwise do a runlist replay
 	exit
     fi
     nevents=-1
-    maxsegments=2 
-    segments_per_job=3 
+    maxsegments=$2 
+    segments_per_job=$3 
     run_on_ifarm=0
 
     #read the configuration info from the text file
