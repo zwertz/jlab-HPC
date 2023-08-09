@@ -71,9 +71,9 @@ do
     sbsdigscript=$SCRIPT_DIR'/run-sbsdig.sh'
 
     if [[ $run_on_ifarm -ne 1 ]]; then
-	swif2 add-job -workflow $workflowname -partition production -name $sbsdigjobname -cores 1 -disk 5GB -ram 1500MB $sbsdigscript $txtfile $sbsdiginfile $gemconfig $run_on_ifarm $LIBSBSDIG
+	swif2 add-job -workflow $workflowname -partition production -name $sbsdigjobname -cores 1 -disk 5GB -ram 1500MB $sbsdigscript $txtfile $sbsdiginfile $gemconfig $run_on_ifarm $G4SBS $LIBSBSDIG
     else
-	$sbsdigscript $txtfile $sbsdiginfile $gemconfig $run_on_ifarm $LIBSBSDIG
+	$sbsdigscript $txtfile $sbsdiginfile $gemconfig $run_on_ifarm $G4SBS $LIBSBSDIG
     fi
 done
 

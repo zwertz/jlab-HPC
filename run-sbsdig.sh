@@ -17,9 +17,11 @@ txtfile=$1 # .txt file containing input file paths
 infilename=$2
 gemconfig=$3 # valid options: 8,10,12 (Represents # GEM modules)
 run_on_ifarm=$4
-libsbsdigenv=$5
+g4sbsenv=$5
+libsbsdigenv=$6
 
 # paths to necessary libraries (ONLY User specific part) ---- #
+export G4SBS=$g4sbsenv
 export LIBSBSDIG=$libsbsdigenv
 # ----------------------------------------------------------- #
 
@@ -41,11 +43,12 @@ module use /apps/modulefiles
 fi 
 
 # setup farm environments
-source /site/12gev_phys/softenv.sh 2.4
+source /site/12gev_phys/softenv.sh 2.5
 module load gcc/9.2.0 
 ldd $LIBSBSDIG/bin/sbsdig |& grep not
 
 # Setup sbsdig specific environments
+source $G4SBS/bin/g4sbs.sh
 source $LIBSBSDIG/bin/sbsdigenv.sh
 
 # Choosing the right DB file depending on GEM config
