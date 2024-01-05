@@ -78,7 +78,7 @@ fi
 
 if [ $experiment == 'GEN' ] #GEN replay
 then
-    analyzer -b -q 'replay_gmn_mc.C+("'$inputfile'",'$config','$maxevents')'    
+    analyzer -b -q 'replay_gen_mc.C+("'$inputfile'",'$config','$maxevents')'    
 fi
 
 
