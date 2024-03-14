@@ -26,8 +26,6 @@
      0 0 * * 0 /path/to/touch_files.sh
      ```
    - Ensure you replace `/path/to/touch_files.sh` with the actual path to your script. This step schedules the script in your crontab for regular execution.
-     ```
    - Adjust the crontab entry according to your scheduling needs.
-     ```
 
 This setup ensures your files remain accessible by periodically updating their timestamps, circumventing the auto-deletion policy of /volatile storage.
