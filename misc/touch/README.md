@@ -16,10 +16,16 @@
      ```
 
 3. **Configure Crontab**:
-   - Schedule the script in crontab for automatic execution. For weekly runs on Sunday:
+3. **Configure Crontab**:
+   - To schedule the script for automatic execution, first open the crontab file with:
+     ```
+     crontab -e
+     ```
+   - Then, add a line to run `touch_files.sh` once a week on Sunday at midnight:
      ```
      0 0 * * 0 /path/to/touch_files.sh
      ```
+   - Ensure you replace `/path/to/touch_files.sh` with the actual path to your script. This step schedules the script in your crontab for regular execution.
    - Adjust the crontab entry according to your scheduling needs.
 
 This setup ensures your files remain accessible by periodically updating their timestamps, circumventing the auto-deletion policy of /volatile storage.
