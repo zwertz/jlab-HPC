@@ -50,7 +50,7 @@ def strip_path(filewpath):
 def read_simc_histfile(histfile):
     '''Reads SIMC hist file and returns a dictionary'''
     result = {}
-    regex = r"\s+([A-Za-z\s{0,1}\(\)/_]+)\s+=\s+([0-9E?\+?\.]+)"
+    regex = r"\s+([A-Za-z\s{0,1}\(\)/_\.>]+)\s+=\s+([0-9E?\+?\.-]+)"
     lines = read_file(histfile)
     for line in lines:
         if 'GeV^2' not in line:
@@ -60,13 +60,13 @@ def read_simc_histfile(histfile):
 
 def grab_simc_norm_factors(histfile, is_title):
     '''Grabs important normalization factors from SIMC .hist file'''
-    titles = ['jobid', 'Nthrown', 'Ntried', 'genvol(MeV*sr^2)', 'luminosity(ub^-1)', 'ebeam(GeV)', 'charge(mC)', 'RndmSeed', 'UsingRS','MaxWeightRS(ubMeV^-1sr^-2)']
-    params = ['Ngen (request)', 'Ntried', 'genvol', 'luminosity', 'Ebeam', 'charge', 'Random Seed', 'Using RS', 'Chosen max wt (max_weight_RS)'] 
+    titles = ['jobid', 'Nthrown', 'Ntried', 'genvol(MeV*sr^2)', 'luminosity(ub^-1)', 'ebeam(GeV)', 'charge(mC)', 'RndmSeed', 'UsingRS', 'MaxWtRS(ub/MeV/sr2)', 'wtGTmaxwt', 'ObsMaxWtRS']
+    params = ['Ngen (request)', 'Ntried', 'genvol', 'luminosity', 'Ebeam', 'charge', 'Random Seed', 'Using RS', 'Chosen max wt (max_weight_RS)', 'No. events with wt>max_wt_RS', 'Observed max wt'] 
     if int(is_title) != 1:
         values = []
         values.append(get_job_id(histfile))
         flags = read_simc_histfile(histfile)
-        for item in params: values.append(flags.get(item,error_code))
+        for item in params: values.append(flags.get(item,0))
         return ','.join(str(e) for e in values)
     else: 
         return ','.join(str(e) for e in titles)

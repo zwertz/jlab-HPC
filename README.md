@@ -18,11 +18,12 @@ There are mainly four different kind of scripts present in this repository:
 ## 2. Processes:
 Here is a list of processess that can be executed using the scripts present in this repo:
 1. raw data reconstruction (replay): Use `sbs-replay-main.sh` script. This will work for all SBS experiments
-2. g4sbs simulation: Use `submit-g4sbs-jobs.sh` script.
-3. digitization of simulated data (sbsdig): Use `submit-sbsdig-job.sh` script.
-4. digitized data reconstruction: Use `submit-digireplay-jobs.sh` script.
-5. simulation, digitization, & replay in one go (in order): Use `submit-simu-digi-replay-jobs.sh` script.
-6. simulation using SIMC generator, digitization, & replay in one go (in order): Use `submit-simc-g4sbs-digi-replay-jobs.sh` script.
+2. SIMC simulation: Use `submit-simc-jobs.sh` script.
+3. g4sbs simulation: Use `submit-g4sbs-jobs.sh` script.
+4. digitization of simulated data (sbsdig): Use `submit-sbsdig-job.sh` script.
+5. digitized data reconstruction: Use `submit-digireplay-jobs.sh` script.
+6. simulation, digitization, & replay in one go (in order): Use `submit-simu-digi-replay-jobs.sh` script.
+7. simulation using SIMC generator, digitization, & replay in one go (in order): Use `submit-simc-g4sbs-digi-replay-jobs.sh` script.
 
 ## 3. Prerequisites:
 - Most up-to-date build of the following libraries:
@@ -58,6 +59,7 @@ An exhaustive list of all the SWIF2 commands can be found [here](https://scicomp
 - `swif2 status <wf_name>` - Shows general status of the workflow, `wf_name`
 - `swif2 cancel <wf_name> -delete` - Cancels all the jobs in workflow `wf_name` and then deletes it 
 - `swif2 retry-jobs <wf_name> -problem <pb_type>` - Reruns all the abandoned jobs in `wf_name` with problem type `pb_type`
+- `swif2 modify-jobs <wf_name> -ram mult 2 -problem <pb_type>` - Reruns problem jobs with 2 times more RAM allocation 
 
 ## 6. Contact:
 In case of any questions or concerns please contact the author(s),
