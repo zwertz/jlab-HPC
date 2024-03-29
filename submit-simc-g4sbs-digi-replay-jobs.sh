@@ -58,11 +58,11 @@ SIMCJOBram='100MB'
 SIMCJOBdisk='250MB'
 SIMCJOBtime='6h'
 # g4sbs jobs
-G4SBSJOBram='800MB'
+G4SBSJOBram='1200MB'
 G4SBSJOBdisk='1GB'
 G4SBSJOBtime='24h'
 # sbsdig jobs
-SBSDIGJOBram='1000MB'
+SBSDIGJOBram='1200MB'
 SBSDIGJOBdisk='100MB'
 SBSDIGJOBtime='6h'
 # replay jobs
