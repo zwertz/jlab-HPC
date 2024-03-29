@@ -44,11 +44,11 @@ njobs=$5        # total no. of jobs to submit
 run_on_ifarm=$6 # 1=>Yes (If true, runs all jobs on ifarm)
 # ----/\---- Above variables are taken as arguments to this script ---/\---- # 
 # Workflow name
-workflowname='rsdiffrn_smwt'
+workflowname=
 # Specify a directory on volatile to store simc, g4sbs, sbsdig, & replayed outfiles.
 # Working on a single directory is convenient & safe for the above mentioned
 # four processes to run coherently without any error.
-outdirpath='/lustre19/expphy/volatile/halla/sbs/pdbforce/g4sbs_output/dMCcomp/sbs7_sbs85p/rsDIFFrn_samemaxwt'
+outdirpath=
 # -------------------------------------------------------------------------- #
 
 # ------ Variables to allocate time and memory for each type of jobs  ------ #
@@ -60,7 +60,7 @@ SIMCJOBtime='6h'
 # g4sbs jobs
 G4SBSJOBram='800MB'
 G4SBSJOBdisk='1GB'
-G4SBSJOBtime='12h'
+G4SBSJOBtime='24h'
 # sbsdig jobs
 SBSDIGJOBram='1000MB'
 SBSDIGJOBdisk='100MB'
