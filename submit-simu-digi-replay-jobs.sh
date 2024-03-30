@@ -13,6 +13,11 @@
 # Setting necessary environments via setenv.sh
 source setenv.sh
 
+# Set path to version information
+USER_VERSION_PATH="misc/version_control/user_env_version.conf"
+# Check to verify information is at location and update as necessary
+./misc/version_control/check_and_update_versions.sh
+
 # List of arguments
 preinit=$1      # G4SBS preinit macro w/o file extention (Must be located at $G4SBS/scripts)
 sbsconfig=$2    # SBS configuration (Valid options: GMN4,GMN7,GMN11,GMN14,GMN8,GMN9,GEN2,GEN3,GEN4)
@@ -159,6 +164,20 @@ do
 	$digireplayscript
     fi
 done
+
+# add a copy of the version control to simcout for traceability
+# Define the path for the short version file within the output directory
+VERSION_FILE="$simcoutdir/version_info.txt"
+
+# Add the date and time of creation to the version file
+echo "# Version file created on $(date '+%Y-%m-%d %H:%M:%S')" > "$VERSION_FILE"
+
+# Append the contents of last_update.conf to the version file
+echo "" >> "$VERSION_FILE" # Add an empty line for readability
+cat "$USER_VERSION_PATH" >> "$VERSION_FILE"
+
+echo "Version information has been saved to $VERSION_FILE"
+
 
 # run the workflow and then print status
 if [[ $run_on_ifarm -ne 1 ]]; then

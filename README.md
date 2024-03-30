@@ -14,6 +14,7 @@ There are mainly four different kind of scripts present in this repository:
 2. **Run scripts** (name begins with `run-` keyword): Each of these scripts execute individual processes such as g4sbs simulation, digitization, etc. E.g. `run-g4sbs-simu.sh` executes g4sbs simulation jobs. Users shouldn't have to edit or modify these scripts.
 3. **Submit scripts** (name begins with `submit-` keyword): These are essentially wrapper scripts. Every run script has one (or more) corresponding submit script(s). Submit scripts take a few command line arguments and run the corresponding run script(s) accordingly. E.g. `submit-g4sbs-jobs.sh` script executes `run-g4sbs-simu.sh` script, which runs g4sbs simulations, according to the command line arguments (e.g. g4sbs macro name, no. of jobs, etc.) given by the user.
 4. **Organization scripts**: These scripts are used to organize a replay and make it more streamlined for the user. They take a few arguments and can tell which type of SBS experiment to use and can run single replays or multi replays. This script will subsequently call the proper submit script (above). Right now this is only implemented for real data replays in the script sbs-replay-main.sh. In the future it may be best to make a similar for the simulated data as well.
+5. **Hall A software version control**: See 'misc/version_control/last_update.conf for latest stable build git hashes. Script output will include 'version_info.txt' which details all dependent software versions used for jobs contained in same output directory, including active versions of the analyzer and geant4.
 
 ## 2. Processes:
 Here is a list of processess that can be executed using the scripts present in this repo:
@@ -24,6 +25,7 @@ Here is a list of processess that can be executed using the scripts present in t
 5. digitized data reconstruction: Use `submit-digireplay-jobs.sh` script.
 6. simulation, digitization, & replay in one go (in order): Use `submit-simu-digi-replay-jobs.sh` script.
 7. simulation using SIMC generator, digitization, & replay in one go (in order): Use `submit-simc-g4sbs-digi-replay-jobs.sh` script.
+8. default environment setup: Use 'misc/setup_halla_analysis_environment' script.
 
 ## 3. Prerequisites:
 - Most up-to-date build of the following libraries:
@@ -51,7 +53,11 @@ Here is a list of processess that can be executed using the scripts present in t
 `submit-simu-digi-replay-jobs.sh example GMN4 100000 0 10 0` <br>
 \*\*(Assuming the g4sbs macro, named example.mac, is placed in $G4SBS/scripts directory and we want to run 10 jobs with 100K events per job for GMn SBS4 configuration.)
 
-## 5. Useful SWIF2 commands:
+## 5. Hall A environment setup:
+1. Open and modify the preamble at 'misc/setup-halla-analysis-environment.sh'. Ensure that the work directory added is where user desires all parallel builds of G4SBS, libsbsdig, simc_gfortran, sbs-offline, and sbs-replay to be located. By default, the active branches of JeffersonLab (MarkKJones for simc_gfortran) git repositories are set, but forks may be configured in the preamble. Note that user CUENAME and USERNAME may be different. This script does not perform operations to configure ssh or create a functional work directory for the user.
+2. Execute the script. All version control files and setenv.sh will be updated automatically.
+
+## 6. Useful SWIF2 commands:
 An exhaustive list of all the SWIF2 commands can be found [here](https://scicomp.jlab.org/cli/swif.html). Here is a small list of very useful and common SWIF2 commands:
 
 - `swif2 create <wf_name>` - Creates a SWIF2 workflow with name `wf_name` 
