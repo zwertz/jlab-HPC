@@ -23,30 +23,30 @@
 # 1) Using /group/halla/modulefiles (Recommended)
 # E.g. ANAVER='1.7.4' loads analyzer/1.7.4. It comes with:
 # root/6.26.10, gcc/12.3.0, python/3.11.4,x & evio/5.3
-ANAVER='1.7.8'  # Analyzer version
+ANAVER='1.7.4'  # Analyzer version
 # 2) Using /site/12gev_phys/softenv.sh (NOT recommended!) 
 # ** $ANALYZER will be needed for this
-#useJLABENV=1    # =1, forces 12gev_phys environment
-#JLABENV='2.6'   # /site/12gev_phys/softenv.sh version
+useJLABENV=1    # =1, forces 12gev_phys environment
+JLABENV='2.6'   # /site/12gev_phys/softenv.sh version
 # ********************************************** # 
 
 # Required by all
-export SCRIPT_DIR=/w/halla-scshelf2102/sbs/seeds/test5/jlab-HPC
+export SCRIPT_DIR=/Path/to/jlab-HPC/repository
 
 # Required by the scripts running G4SBS or LIBSBSDIG jobs
-export G4SBS=/w/halla-scshelf2102/sbs/seeds/sim/install
+export G4SBS=/Path/to/G4SBS/install/directory
 
 # Required by the scripts running SIMC (simc_gfortran) jobs
-export SIMC=/w/halla-scshelf2102/sbs/seeds/simc_gfortran
+export SIMC=/Path/to/simc_gfortran/repository
 
 # Required by the scripts running digitization jobs using sbsdig
-export LIBSBSDIG=/w/halla-scshelf2102/sbs/seeds/dig/install
+export LIBSBSDIG=/Path/to/libsbsdig/install/directory
 
 # Required by the scripts running replay (data or MC) jobs
 # $ANALYZER not needed while using modulefiles (See above)
-#export ANALYZER=/Path/to/analyzer/install/directory
-export SBSOFFLINE=/w/halla-scshelf2102/sbs/seeds/sbsoffline/install
-export SBS_REPLAY=/w/halla-scshelf2102/sbs/seeds/sbsoffline/SBS-replay
+export ANALYZER=/Path/to/analyzer/install/directory
+export SBSOFFLINE=/Path/to/SBS-offline/install/directory
+export SBS_REPLAY=/Path/to/SBS-replay/repository
 
 # Path to data directories (NOT User Specific)
 # The path is written this way below becauses strings will need
