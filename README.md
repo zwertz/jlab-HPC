@@ -67,7 +67,7 @@ An exhaustive list of all the SWIF2 commands can be found [here](https://scicomp
 - `swif2 retry-jobs <wf_name> -problem <pb_type>` - Reruns all the abandoned jobs in `wf_name` with problem type `pb_type`
 - `swif2 modify-jobs <wf_name> -ram mult 2 -problem <pb_type>` - Reruns problem jobs with 2 times more RAM allocation 
 
-## 6. Contact:
+## 7. Contact:
 In case of any questions or concerns please contact the author(s),
 >Authors: Provakar Datta (UConn), Sean Jeffas (UVA), Sebastian Seeds (UConn) <br> 
 >Contact: <pdbforce@jlab.org> (Provakar)
