@@ -32,9 +32,9 @@
 source setenv.sh
 
 # Set path to version information
-USER_VERSION_PATH="misc/version_control/user_env_version.conf"
+USER_VERSION_PATH="$SCRIPT_DIR/misc/version_control/user_env_version.conf"
 # Check to verify information is at location and update as necessary
-./misc/version_control/check_and_update_versions.sh
+$SCRIPT_DIR/misc/version_control/check_and_update_versions.sh
 
 # ------ Variables needed to be set properly for successful execution ------ #
 # -------------------------------------------------------------------------- #
@@ -49,11 +49,11 @@ njobs=$5        # total no. of jobs to submit
 run_on_ifarm=$6 # 1=>Yes (If true, runs all jobs on ifarm)
 # ----/\---- Above variables are taken as arguments to this script ---/\---- # 
 # Workflow name
-workflowname=
+workflowname=p637sf_sbs8_sbs70p_simc_RS
 # Specify a directory on volatile to store simc, g4sbs, sbsdig, & replayed outfiles.
 # Working on a single directory is convenient & safe for the above mentioned
 # four processes to run coherently without any error.
-outdirpath=
+outdirpath=/lustre19/expphy/volatile/halla/sbs/seeds/simc/p637sf_sbs8_sbs70p_simc_RS
 # -------------------------------------------------------------------------- #
 
 # ------ Variables to allocate time and memory for each type of jobs  ------ #
@@ -267,11 +267,16 @@ done
 # cp $simcnormtable $outdirpath
 
 # add a copy of the version control to simcout for traceability
-# Define the path for the short version file within the output directory
-VERSION_FILE="$simcoutdir/version_info.txt"
+# Define the path for the version file within the output directory
+VERSION_FILE="$simcoutdir/version_info_$(date '+%Y%m%d_%H%M%S').txt"
 
 # Add the date and time of creation to the version file
 echo "# Version file created on $(date '+%Y-%m-%d %H:%M:%S')" > "$VERSION_FILE"
+
+# Add the configured run range to the version file
+ljobid=$((fjobid + njobs))
+echo "# This run range from $fjobid to $ljobid" >> "$VERSION_FILE"
+echo "# This infile $infile" >> "$VERSION_FILE"
 
 # Append the contents of last_update.conf to the version file
 echo "" >> "$VERSION_FILE" # Add an empty line for readability
@@ -285,3 +290,4 @@ if [[ $run_on_ifarm -ne 1 ]]; then
     echo -e "\n Getting workflow status.. [may take a few minutes!] \n"
     swif2 status $workflowname
 fi
+

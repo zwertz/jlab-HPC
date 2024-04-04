@@ -6,13 +6,13 @@
 ##################################################################
 # Define username and GitHub account name for cloning repositories
 # This is the name which designates your work directory (/work/halla/sbs/USERNAME)
-USERNAME="seeds"
+USERNAME=""
 # This is the name which designates your home directory (/u/home/CUENAME)
-CUENAME="sseeds"
+CUENAME=""
 # This is the name of the default github repository
 GITHUB_ACCOUNT_NAME="JeffersonLab"
 # Define user's work directory
-WORK_DIR="/work/halla/sbs/$USERNAME/env_test2"
+WORK_DIR=""
 ##################################################################
 #Override git repos. Leave $GITHUB_ACCOUNT_NAME if default (JeffersonLab) is desired
 #Update with alternative forks if desired
