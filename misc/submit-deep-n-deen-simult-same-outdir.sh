@@ -10,7 +10,7 @@
 ## --------
 ## P. Datta <pdbforce@jlab.org> CREATED 06/16/23
 
-export SCRIPT_DIR=/w/halla-scshelf2102/sbs/pdbforce/jlab-HPC
+export SCRIPT_DIR=
 
 # arguments
 infilebase=$1   # SIMC input file name w/o "_deep/_deen.inp" part 
