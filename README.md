@@ -69,5 +69,5 @@ An exhaustive list of all the SWIF2 commands can be found [here](https://scicomp
 
 ## 6. Contact:
 In case of any questions or concerns please contact the author(s),
->Authors: Provakar Datta (UConn), Sean Jeffas (UVA) <br> 
+>Authors: Provakar Datta (UConn), Sean Jeffas (UVA), Sebastian Seeds (UConn) <br> 
 >Contact: <pdbforce@jlab.org> (Provakar)
