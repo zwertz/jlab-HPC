@@ -1,10 +1,28 @@
 #!/bin/bash
 
-# Paths to relevant files and scripts
-USER_VERSION_PATH="user_env_version.conf"
-GITREPOS_FILE="gitrepos.sh"
-SETUP_GITREPOS_SCRIPT="setup-gitrepos.sh"
-SET_USER_VERSION_INFO_SCRIPT="set-user-version-info.sh"
+# Check if SCRIPT_DIR is defined
+if [ -z "$SCRIPT_DIR" ]; then
+    echo "The SCRIPT_DIR environment variable is not set."
+    read -p "Please enter the directory path/to/jlab-HPC or press enter to exit: " user_input
+    if [ -z "$user_input" ]; then
+        echo "No directory provided. Exiting script..."
+        exit 1
+    else
+        SCRIPT_DIR=$user_input
+    fi
+fi
+
+# Validate that SCRIPT_DIR points to a directory
+if [ ! -d "$SCRIPT_DIR" ]; then
+    echo "The path '$SCRIPT_DIR' is not a valid directory. Exiting script..."
+    exit 1
+fi
+
+# Paths to relevant files and scripts using SCRIPT_DIR environment variable
+USER_VERSION_PATH="${SCRIPT_DIR}/misc/version_control/user_env_version.conf"
+GITREPOS_FILE="${SCRIPT_DIR}/misc/version_control/gitrepos.sh"
+SETUP_GITREPOS_SCRIPT="${SCRIPT_DIR}/misc/version_control/setup-gitrepos.sh"
+SET_USER_VERSION_INFO_SCRIPT="${SCRIPT_DIR}/misc/version_control/set-user-version-info.sh"
 
 # Function to check for missing versions or hashes
 check_missing_versions() {
@@ -25,17 +43,18 @@ check_missing_repos() {
     fi
 }
 
+# Begin script logic
 # First, check for missing versions or hashes
 if check_missing_versions; then
     echo "Missing versions or hashes in $USER_VERSION_PATH."
     # Next, check if any repository paths are missing
     if check_missing_repos; then
         echo "Missing repository paths detected. Executing $SETUP_GITREPOS_SCRIPT."
-        ./$SETUP_GITREPOS_SCRIPT
+        $SETUP_GITREPOS_SCRIPT
     fi
     # Update user environment version information
     echo "Updating user environment version information."
-    ./$SET_USER_VERSION_INFO_SCRIPT
+    $SET_USER_VERSION_INFO_SCRIPT
 else
     echo "All versions and hashes are present in $USER_VERSION_PATH."
 fi

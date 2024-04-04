@@ -8,6 +8,8 @@
 # P. Datta <pdbforce@jlab.org> CREATED 04-19-2023                           #
 # ---------                                                                 #
 # ** Do not tamper with this sticker! Log any updates to the script below.  #
+# ---------                                                                 #
+# S. Seeds <sseeds@jlab.org> Added version control machinery                #
 # ------------------------------------------------------------------------- #
 
 # ------------------- Notes and Instructions (READ BEFORE EXECUTION) -------------------- #
@@ -49,11 +51,11 @@ njobs=$5        # total no. of jobs to submit
 run_on_ifarm=$6 # 1=>Yes (If true, runs all jobs on ifarm)
 # ----/\---- Above variables are taken as arguments to this script ---/\---- # 
 # Workflow name
-workflowname=p637sf_sbs8_sbs70p_simc_RS
+workflowname=
 # Specify a directory on volatile to store simc, g4sbs, sbsdig, & replayed outfiles.
 # Working on a single directory is convenient & safe for the above mentioned
 # four processes to run coherently without any error.
-outdirpath=/lustre19/expphy/volatile/halla/sbs/seeds/simc/p637sf_sbs8_sbs70p_simc_RS
+outdirpath=
 # -------------------------------------------------------------------------- #
 
 # ------ Variables to allocate time and memory for each type of jobs  ------ #

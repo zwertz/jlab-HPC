@@ -1,8 +1,26 @@
 #!/bin/bash
 
-# Define the paths to your files
-SETENV_FILE="../../setenv.sh"
-GITREPOS_FILE="gitrepos.sh"
+# Check if SCRIPT_DIR is defined
+if [ -z "$SCRIPT_DIR" ]; then
+    echo "The SCRIPT_DIR environment variable is not set."
+    read -p "Please enter the directory path or press enter to exit: " user_input
+    if [ -z "$user_input" ]; then
+        echo "No directory provided. Exiting script..."
+        exit 1
+    else
+        SCRIPT_DIR=$user_input
+    fi
+fi
+
+# Validate that SCRIPT_DIR points to a directory
+if [ ! -d "$SCRIPT_DIR" ]; then
+    echo "The path '$SCRIPT_DIR' is not a valid directory. Exiting script..."
+    exit 1
+fi
+
+# Define the paths to your files using SCRIPT_DIR
+SETENV_FILE="$SCRIPT_DIR/setenv.sh"
+GITREPOS_FILE="$SCRIPT_DIR/misc/version_control/gitrepos.sh"
 
 # Ensure setenv.sh exists
 if [ ! -f "$SETENV_FILE" ]; then
@@ -28,7 +46,7 @@ echo "#!/bin/bash
 #****************************************** # 
 
 # Static
-export HPC_REPO=../..
+export HPC_REPO=$SCRIPT_DIR
 #
 " > "$GITREPOS_FILE"
 

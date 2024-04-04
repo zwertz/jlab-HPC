@@ -1,9 +1,27 @@
 #!/bin/bash
 
-# Path to the gitrepos.sh file
-GITREPO_FILE="gitrepos.sh"
-# Define the name of the new output file
-USER_ENV_VERSION_FILE="user_env_version.conf"
+# Check if SCRIPT_DIR is defined
+if [ -z "$SCRIPT_DIR" ]; then
+    echo "The SCRIPT_DIR environment variable is not set."
+    read -p "Please enter the directory path or press enter to exit: " user_input
+    if [ -z "$user_input" ]; then
+        echo "No directory provided. Exiting script..."
+        exit 1
+    else
+        SCRIPT_DIR=$user_input
+    fi
+fi
+
+# Validate that SCRIPT_DIR points to a directory
+if [ ! -d "$SCRIPT_DIR" ]; then
+    echo "The path '$SCRIPT_DIR' is not a valid directory. Exiting script..."
+    exit 1
+fi
+
+# Path to the gitrepos.sh file using SCRIPT_DIR
+GITREPO_FILE="${SCRIPT_DIR}/misc/version_control/gitrepos.sh"
+# Define the name of the new output file, also within SCRIPT_DIR scope
+USER_ENV_VERSION_FILE="${SCRIPT_DIR}/misc/version_control/user_env_version.conf"
 
 # Ensure gitrepos.sh exists
 if [ ! -f "$GITREPO_FILE" ]; then
@@ -22,12 +40,26 @@ G4VER=$(module list 2>&1 | grep -oP 'geant4/\K[^ ]+' || echo "11.1.2")    # Fall
 fetch_latest_commit() {
     local repo_path="$1"
     if [ ! -d "$repo_path" ]; then
-        echo "Directory does not exist: $repo_path"
+        echo "ERROR: Directory does not exist: $repo_path"
         return ""
     fi
     cd "$repo_path" || return ""
-    local latest_commit=$(git rev-parse HEAD)
-    echo "$latest_commit"
+    
+    # Check if the directory is a git repository
+    if ! git rev-parse --git-dir > /dev/null 2>&1; then
+        echo "WARNING: Not a git repository: $repo_path"
+        cd - > /dev/null
+        return ""
+    fi
+    
+    # Attempt to get the latest commit hash
+    local latest_commit=$(git rev-parse HEAD 2>/dev/null)
+    if [ -z "$latest_commit" ]; then
+        echo "WARNING: Unable to find the latest commit in $repo_path"
+    else
+        echo "$latest_commit"
+    fi
+    
     cd - > /dev/null
 }
 

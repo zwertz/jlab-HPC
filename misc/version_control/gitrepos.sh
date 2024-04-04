@@ -8,7 +8,7 @@
 #****************************************** # 
 
 # Static
-export HPC_REPO=../..
+export HPC_REPO=
 #
 
 export G4SBS_REPO=
