@@ -270,19 +270,34 @@ done
 
 # add a copy of the version control to simcout for traceability
 # Define the path for the version file within the output directory
-VERSION_FILE="$simcoutdir/version_info_$(date '+%Y%m%d_%H%M%S').txt"
+VERSION_FILE="$simcoutdir/${infile}_version.txt"
 
-# Add the date and time of creation to the version file
-echo "# Version file created on $(date '+%Y-%m-%d %H:%M:%S')" > "$VERSION_FILE"
+# Function to append version information to the file
+append_version_info() {
+    # Add the date and time of creation to the version file
+    echo "# Version file created on $(date '+%Y-%m-%d %H:%M:%S')" >> "$VERSION_FILE"
 
-# Add the configured run range to the version file
-ljobid=$((fjobid + njobs))
-echo "# This run range from $fjobid to $ljobid" >> "$VERSION_FILE"
-echo "# This infile $infile" >> "$VERSION_FILE"
+    # Add the configured run range to the version file
+    ljobid=$((fjobid + njobs))
+    echo "# This run range from $fjobid to $ljobid" >> "$VERSION_FILE"
 
-# Append the contents of last_update.conf to the version file
-echo "" >> "$VERSION_FILE" # Add an empty line for readability
-cat "$USER_VERSION_PATH" >> "$VERSION_FILE"
+    # Append the contents of last_update.conf to the version file
+    echo "" >> "$VERSION_FILE" # Add an empty line for readability
+    cat "$USER_VERSION_PATH" >> "$VERSION_FILE"
+    echo "" >> "$VERSION_FILE" # Add an empty line for readability
+}
+
+# Check if the VERSION_FILE already exists
+if [ -f "$VERSION_FILE" ]; then
+    # VERSION_FILE exists, append new version information
+    echo "Appending version information to existing $VERSION_FILE"
+    append_version_info
+else
+    # VERSION_FILE does not exist, create it and add version information
+    echo "Creating new $VERSION_FILE and adding version information"
+    touch "$VERSION_FILE" # Ensure the file exists before appending
+    append_version_info
+fi
 
 echo "Version information has been saved to $VERSION_FILE"
 

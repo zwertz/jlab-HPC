@@ -75,7 +75,6 @@ update_conf() {
 
     # Write updates to user_env_version.conf
     cat > "$USER_ENV_VERSION_FILE" <<EOF
-# SSeeds 3.24.24
 # This list sets the current user build environment versions for all Hall A analysis software
 
 ANAVER=$ANAVER
