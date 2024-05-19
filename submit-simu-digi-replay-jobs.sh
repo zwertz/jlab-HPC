@@ -167,9 +167,9 @@ do
     fi
 done
 
-# add a copy of the version control to simcout for traceability
+# add a copy of the version control to outputdir for traceability
 # Define the path for the version file within the output directory
-VERSION_FILE="$simcoutdir/${infile}_version.txt"
+VERSION_FILE="$outdirpath/${preinit}_version.txt"
 
 # Function to append version information to the file
 append_version_info() {
