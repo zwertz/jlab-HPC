@@ -21,8 +21,8 @@ nevents=$2      # No. of events to generate per job
 fjobid=$3       # first job id
 njobs=$4        # total no. of jobs to submit 
 run_on_ifarm=$5 # 1=>Yes (If true, runs all jobs on ifarm)
-workflowname=
-outdirpath=
+workflowname=ewertz_simulation_sf100p
+outdirpath=/lustre19/expphy/volatile/halla/sbs/ewertz/Simulation/SBS8/SBS8_100p
 
 # Validating the number of arguments provided
 if [[ "$#" -ne 5 ]]; then
@@ -82,7 +82,7 @@ do
     g4sbsscript=$SCRIPT_DIR'/run-g4sbs-simu.sh'' '$preinit' '$postscript' '$nevents' '$outfilebase' '$outdirpath' '$run_on_ifarm' '$G4SBS' '$ANAVER' '$useJLABENV' '$JLABENV
 
     if [[ $run_on_ifarm -ne 1 ]]; then
-	swif2 add-job -workflow $workflowname -partition production -name $g4sbsjobname -cores 1 -disk 5GB -ram 1500MB $g4sbsscript
+	swif2 add-job -workflow $workflowname -partition production -name $g4sbsjobname -cores 1 -disk 5GB -ram 3000MB $g4sbsscript
     else
 	$g4sbsscript
     fi

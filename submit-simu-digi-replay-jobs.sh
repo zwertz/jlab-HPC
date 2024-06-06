@@ -21,11 +21,11 @@ fjobid=$4       # first job id
 njobs=$5        # total no. of jobs to submit 
 run_on_ifarm=$6 # 1=>Yes (If true, runs all jobs on ifarm)
 # Workflow name (Not relevant if run_on_ifarm = 1)
-workflowname=
+workflowname=ewertz_MC_HCalEff
 # Specify a directory on volatile to store g4sbs, sbsdig, & replayed files.
 # Working on a single directory is convenient & safe for the above mentioned
 # three processes to run smoothly.
-outdirpath=
+outdirpath=/lustre19/expphy/volatile/halla/sbs/ewertz/Simulation/HCal_Eff
 
 # Checking the environments
 if [[ ! -d $SCRIPT_DIR ]]; then
@@ -154,7 +154,7 @@ do
     digireplayscript=$SCRIPT_DIR'/run-digi-replay.sh'' '$digireplayinfile' '$sbsconfig' '-1' '$outdirpath' '$run_on_ifarm' '$ANALYZER' '$SBSOFFLINE' '$SBS_REPLAY' '$ANAVER' '$useJLABENV' '$JLABENV
     
     if [[ $run_on_ifarm -ne 1 ]]; then
-	swif2 add-job -workflow $workflowname -antecedent $sbsdigjobname -partition production -name $digireplayjobname -cores 1 -disk 5GB -ram 1500MB $digireplayscript
+	swif2 add-job -workflow $workflowname -antecedent $sbsdigjobname -partition production -name $digireplayjobname -cores 1 -disk 5GB -ram 3500MB $digireplayscript
     else
 	$digireplayscript
     fi

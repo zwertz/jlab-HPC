@@ -20,7 +20,7 @@ fjobid=$4       # first job id
 njobs=$5        # total no. of jobs to submit 
 run_on_ifarm=$6 # 1=>Yes (If true, runs all jobs on ifarm)
 # workflow name
-workflowname=
+workflowname=ewertz_simulation_sf100p
 
 # Checking the environments
 if [[ ! -d $SCRIPT_DIR ]]; then
@@ -71,7 +71,7 @@ do
     sbsdigscript=$SCRIPT_DIR'/run-sbsdig.sh'' '$txtfile' '$sbsdiginfile' '$gemconfig' '$run_on_ifarm' '$G4SBS' '$LIBSBSDIG' '$ANAVER' '$useJLABENV' '$JLABENV
 
     if [[ $run_on_ifarm -ne 1 ]]; then
-	swif2 add-job -workflow $workflowname -partition production -name $sbsdigjobname -cores 1 -disk 5GB -ram 1500MB $sbsdigscript
+	swif2 add-job -workflow $workflowname -partition production -name $sbsdigjobname -cores 1 -disk 5GB -ram 3500MB $sbsdigscript
     else
 	$sbsdigscript
     fi
