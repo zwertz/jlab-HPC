@@ -103,7 +103,7 @@ fi
 
 for ((i=0; i<=$maxsegments; i++))
 do
-    fnameout_pattern='/farm_out/pdbforce/ewertz_gmn_'$runnum'_segment'$i'.out'
+    fnameout_pattern='/farm_out/ewertz/ewertz_gmn_'$runnum'_segment'$i'.out'
     #    sbatch --output=$fnameout_pattern run_GMN_sbatch_nohodo.sh $runnum -1 0 e1209019 $i 1
     jobname='ewertz_gmn_'$runnum'_segment'$i
     
